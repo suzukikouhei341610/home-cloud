@@ -16,15 +16,11 @@
             color: white;
             padding: 15px;
             text-align: center;
-            position: relative; /* 位置を相対的に設定 */
         }
         h1 {
-            color: white; /* ヘッダーのテキスト色 */
-            margin: 0; /* マージンを0に設定 */
-            position: relative; /* 位置を相対的に設定 */
-            z-index: 1; /* 最前面に表示するための設定 */
-            font-size: 24px; /* フォントサイズを調整 */
-            font-weight: bold; /* 太字に設定 */
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
         }
         .container {
             display: flex;
@@ -40,9 +36,9 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
-        .dashboard h1 { /* ここを修正 */
-            color: #2c3e50; /* ホームクラウドとAWSクラウドのテキスト色 */
-            margin: 0; /* マージンを0に設定 */
+        .dashboard h1 {
+            color: #2c3e50;
+            margin: 0;
         }
         .buttons {
             margin-top: 30px;
@@ -76,7 +72,6 @@
         <h1>クラウドポータル</h1>
     </header>
 
-    <!-- お知らせセクション -->
     <div class="notice">
         お知らせ: メンテナンスのため、10月25日の午前2時から午前4時までサービスを一時停止します。
     </div>
@@ -84,18 +79,22 @@
     <div class="container">
         <!-- ホームクラウド -->
         <div class="dashboard">
-            <h1>ホームクラウド</h1> <!-- ここは元のまま -->
+            <h1>ホームクラウド</h1>
             <div class="buttons">
-                <button class="button">各種申請</button>
+                <a href="home-cloud.html">
+                    <button class="button">各種申請</button>
+                </a>
                 <button class="button">申請履歴</button>
             </div>
         </div>
 
         <!-- AWSクラウド -->
         <div class="dashboard">
-            <h1>AWSクラウド</h1> <!-- ここも元のまま -->
+            <h1>AWSクラウド</h1>
             <div class="buttons">
+                <a href="aws-cloud.html">
                 <button class="button">各種申請</button>
+            </a>
                 <button class="button">申請履歴</button>
             </div>
         </div>
