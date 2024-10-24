@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホームクラウド - 申請履歴一覧</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+        }
+        h1 {
+            color: white;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container {
+            margin: 20px;
+        }
+        .history-table {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .history-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .history-table th, .history-table td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+        .history-table th {
+            background-color: #3498db;
+            color: white;
+        }
+        .back-button {
+            background-color: #3498db;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 18px;
+            display: inline-block;
+        }
+        .back-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>ホームクラウド - 申請履歴一覧</h1>
+    </header>
+
+    <div class="container">
+        <div class="history-table">
+            <h2>申請履歴</h2>
+            <table>
+                <tr>
+                    <th>申請ID</th>
+                    <th>申請日</th>
+                    <th>申請内容</th>
+                    <th>ステータス</th>
+                </tr>
+                <!-- 以下はダミーデータです。実際にはサーバからデータを取得して表示します -->
+                <tr>
+                    <td>001</td>
+                    <td>2024-10-20</td>
+                    <td>クラウドサービス利用申請</td>
+                    <td>承認済み</td>
+                </tr>
+                <tr>
+                    <td>002</td>
+                    <td>2024-10-15</td>
+                    <td>データバックアップ申請</td>
+                    <td>処理中</td>
+                </tr>
+                <tr>
+                    <td>003</td>
+                    <td>2024-10-10</td>
+                    <td>アクセス権限申請</td>
+                    <td>却下</td>
+                </tr>
+            </table>
+
+            <a href="index.html">
+                <button class="back-button">トップへ戻る</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
