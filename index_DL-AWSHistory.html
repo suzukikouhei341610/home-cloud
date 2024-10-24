@@ -83,8 +83,7 @@
     </div>
 
     <script>
-        // APIからデータを取得してテーブルに表示
-        fetch('https://yourapi.com/api/DlAwsApplicationHistory')  <!-- DL-AWS 用のAPIエンドポイント -->
+        fetch('https://yourapi.com/api/DlAwsApplicationHistory') 
             .then(response => response.json())
             .then(data => {
                 const table = document.getElementById('historyTable');
