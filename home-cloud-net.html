@@ -30,7 +30,7 @@
         }
         .button-container {
             display: grid;
-            grid-template-columns: repeat(4, 250px); /* ボタンの幅を統一 */
+            grid-template-columns: repeat(2, 300px); /* ボタンの幅を広げる */
             gap: 20px;
             justify-content: center;
             margin-top: 30px;
@@ -46,7 +46,7 @@
             text-align: center;
             box-sizing: border-box;
             white-space: nowrap; /* テキストを折り返さない */
-            min-width: 250px; /* ボタンの最小幅を設定してサイズを統一 */
+            width: 100%;
         }
         .button:hover {
             background-color: #2980b9;
@@ -63,23 +63,15 @@
     </header>
 
     <div class="container">
-        <h2>各種申請</h2>
+        <h2>Azureネットワーク申請</h2>
         <div class="button-container">
-            <a href="home-cloud-applicoaction.html">
-            <button class="button">アプリ運用</button>
-            </a>
-            <button class="button">Azureインフラ運用</button>
-            <button class="button">AzureAD申請</button>
-            <button class="button">Azure監視申請</button>
-            <a href="home-cloud-net.html">
-            <button class="button">Azureネットワーク申請</button>
-        　　</a>
-            <button class="button">運用担当者ビュー</button>
+            <button class="button">案件登録・IPアドレス配番申請</button>
+            <button class="button">通信用件申請</button>
         </div>
 
         <!-- トップページに戻るボタン -->
         <div class="back-button">
-            <a href="index.html">
+            <a href="home-cloud.html">
                 <button class="button">トップページに戻る</button>
             </a>
         </div>
