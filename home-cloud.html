@@ -31,14 +31,14 @@
         .button-container {
             display: grid;
             grid-template-columns: repeat(4, 250px); /* ボタンの幅を統一 */
-            gap: 20px;
+            gap: 20px; /* ボタン間の距離 */
             justify-content: center;
             margin-top: 30px;
         }
         .button {
             background-color: #3498db;
             color: white;
-            padding: 30px 30px; /* 縦幅を広げるためにパディングを増やす */
+            padding: 30px 0; /* 縦幅を広げるためにパディングを調整 */
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -66,15 +66,23 @@
         <h2>各種申請</h2>
         <div class="button-container">
             <a href="home-cloud-applicoaction.html">
-            <button class="button">アプリ運用</button>
+                <button class="button">アプリ運用</button>
             </a>
-            <button class="button">Azureインフラ運用</button>
-            <button class="button">AzureAD申請</button>
-            <button class="button">Azure監視申請</button>
+            <a href="home-cloud-infra.html">
+                <button class="button">Azureインフラ運用</button>
+            </a>
+            <a href="home-cloud-ad.html">
+                <button class="button">AzureAD申請</button>
+            </a>
+            <a href="home-cloud-monitor.html">
+                <button class="button">Azure監視申請</button>
+            </a>
             <a href="home-cloud-net.html">
-            <button class="button">Azureネットワーク申請</button>
-        　　</a>
-            <button class="button">運用担当者ビュー</button>
+                <button class="button">Azureネットワーク申請</button>
+            </a>
+            <a href="home-cloud-view.html">
+                <button class="button">運用担当者ビュー</button>
+            </a>
         </div>
 
         <!-- トップページに戻るボタン -->
