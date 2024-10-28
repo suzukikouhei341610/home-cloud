@@ -30,29 +30,78 @@
         }
         .button-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-direction: column;
             gap: 20px;
-            margin-top: 30px;
+            width: 600px;
         }
         .button {
             background-color: #3498db;
             color: white;
-            padding: 15px 30px;
+            padding: 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-size: 18px;
-            width: 200px;
-            text-align: center;
+            font-weight: bold;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: relative;
         }
         .button:hover {
             background-color: #2980b9;
+        }
+        .hamburger {
+            font-size: 24px;
+        }
+        .dropdown-content {
+            display: none;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+        }
+        .button.active .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            text-decoration: none;
+            display: block;
+            padding: 8px 16px;
+            color: #2c3e50;
+        }
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+        .back-button a {
+            text-decoration: none;
         }
         .back-button {
             margin-top: 50px;
         }
     </style>
+    <script>
+        function toggleDropdown(button) {
+            // 全てのボタンを取得
+            const allButtons = document.querySelectorAll('.button');
+            
+            // クリックされたボタン以外のボタンのメニューを閉じる
+            allButtons.forEach(btn => {
+                if (btn !== button) {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // クリックされたボタンのメニューをトグル（開閉）する
+            button.classList.toggle('active');
+        }
+    </script>
 </head>
 <body>
 
@@ -63,10 +112,38 @@
     <div class="container">
         <h2>各種申請</h2>
         <div class="button-container">
-            <button class="button">利用申請</button>
-            <button class="button">デプロイ申請</button>
-            <button class="button">JP1申請</button>
-            <button class="button">その他申請</button>
+            <div class="button" onclick="toggleDropdown(this)">
+                利用申請
+                <span class="hamburger">☰</span>
+                <div class="dropdown-content">
+                    <a href="#">新規利用申請</a>
+                    <a href="#">変更申請</a>
+                </div>
+            </div>
+            <div class="button" onclick="toggleDropdown(this)">
+                デプロイ申請
+                <span class="hamburger">☰</span>
+                <div class="dropdown-content">
+                    <a href="#">デプロイ手順書提出</a>
+                    <a href="#">デプロイスケジュール調整</a>
+                </div>
+            </div>
+            <div class="button" onclick="toggleDropdown(this)">
+                JP1申請
+                <span class="hamburger">☰</span>
+                <div class="dropdown-content">
+                    <a href="#">ジョブ登録申請</a>
+                    <a href="#">ジョブスケジュール変更</a>
+                </div>
+            </div>
+            <div class="button" onclick="toggleDropdown(this)">
+                その他申請
+                <span class="hamburger">☰</span>
+                <div class="dropdown-content">
+                    <a href="#">アクセス権限申請</a>
+                    <a href="#">バックアップ申請</a>
+                </div>
+            </div>
         </div>
 
         <!-- トップページに戻るボタン -->
