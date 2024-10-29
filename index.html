@@ -1,92 +1,106 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>クラウドポータル</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-    }
-    header {
-        background-color: #2c3e50;
-        color: white;
-        padding: 15px;
-        text-align: center;
-        position: relative;
-    }
-    h1 {
-        color: white;
-        margin: 0;
-        position: relative;
-        z-index: 1;
-        font-size: 24px;
-        font-weight: bold;
-    }
-    .container {
-        display: flex;
-        justify-content: space-between;
-        margin: 20px;
-    }
-    .dashboard {
-        background-color: white;
-        border: 1px solid #ccc;
-        border-radius: 8px;
-        padding: 20px;
-        width: 48%;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
-    .dashboard h1 {
-        color: #2c3e50;
-        margin: 0;
-    }
-    .buttons {
-        margin-top: 30px;
-    }
-    .button {
-        background-color: #3498db;
-        color: white;
-        padding: 15px 30px;
-        border: none;
-        border-radius: 5px;
-        margin: 10px;
-        cursor: pointer;
-        font-size: 18px;
-        display: inline-block;
-        text-align: center;
-        line-height: 1.5;
-    }
-    .button:hover {
-        background-color: #2980b9;
-    }
-    .important-notice {
-        background-color: #e74c3c;
-        color: white;
-        padding: 20px;
-        text-align: center;
-        margin-bottom: 10px;
-        font-size: 20px;
-        font-weight: bold;
-        border-radius: 5px;
-    }
-    .notice {
-        background-color: #f1c40f;
-        color: #2c3e50;
-        padding: 20px;
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 18px;
-        font-weight: bold;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クラウドポータル</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: left; /* 左寄せ */
+            position: relative;
+        }
+        h1 {
+            color: white;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .breadcrumb {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px;
+        }
+        .dashboard {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            width: 48%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .dashboard h1 {
+            color: #2c3e50;
+            margin: 0;
+        }
+        .buttons {
+            margin-top: 30px;
+        }
+        .button {
+            background-color: #3498db;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            display: inline-block;
+            text-align: center;
+            line-height: 1.5;
+        }
+        .button:hover {
+            background-color: #2980b9;
+        }
+        .important-notice {
+            background-color: #e74c3c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .notice {
+            background-color: #f1c40f;
+            color: #2c3e50;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 <header>
-<h1>クラウドポータル</h1>
+    <h1>クラウドポータル</h1>
+    <div class="breadcrumb" id="breadcrumb">
+        <a href="index.html">トップページ</a> ＞＞ 
+    </div>
 </header>
 
 <div class="important-notice">
@@ -102,9 +116,9 @@
     <div class="dashboard">
         <h1>ホームクラウド</h1>
         <div class="buttons">
-            <a href="home-cloud.html">
+            <a href="home-cloud.html" onclick="updateBreadcrumb('ホームクラウド各種申請')">
                 <button class="button">各種申請</button></a>
-            <a href="index_HomeCloudHistory.html">
+            <a href="index_HomeCloudHistory.html" onclick="updateBreadcrumb('ホームクラウド申請履歴')">
                 <button class="button">申請履歴一覧</button>
             </a>
         </div>
@@ -114,13 +128,20 @@
     <div class="dashboard">
         <h1>DL-AWS</h1>
         <div class="buttons">
-            <a href="aws-cloud.html">
+            <a href="aws-cloud.html" onclick="updateBreadcrumb('DL-AWS各種申請')">
                 <button class="button">各種申請</button></a>
-            <a href="index_DL-AWSHistory.html">
+            <a href="index_DL-AWSHistory.html" onclick="updateBreadcrumb('DL-AWS申請履歴')">
                 <button class="button">申請履歴一覧</button>
             </a>
         </div>
     </div>
 </div>
+
+<script>
+    function updateBreadcrumb(page) {
+        const breadcrumb = document.getElementById("breadcrumb");
+        breadcrumb.innerHTML = <a href="index.html">トップページ</a> ＞＞ ${page} ＞＞;
+    }
+</script>
 </body>
 </html>
