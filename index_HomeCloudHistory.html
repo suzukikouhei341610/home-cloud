@@ -85,6 +85,24 @@
         .back-button:hover {
             background-color: #2980b9;
         }
+        /* ↑ボタンのスタイル */
+        #back-to-top {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background-color: rgba(52, 152, 219, 0.7); /* 透けて見える背景 */
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            text-align: center;
+            z-index: 1000;
+        }
+        #back-to-top:hover {
+            background-color: rgba(41, 128, 185, 0.7); /* ホバー時の透けた色 */
+        }
     </style>
 </head>
 <body>
@@ -150,6 +168,9 @@
         </div>
     </div>
 
+    <!-- ↑ボタン -->
+    <button id="back-to-top">↑</button>
+
     <script>
         function filterTable() {
             const applicant = document.getElementById('applicantFilter').value.toLowerCase();
@@ -175,6 +196,14 @@
         document.getElementById('applicantFilter').addEventListener('input', filterTable);
         document.getElementById('approverFilter').addEventListener('input', filterTable);
         document.getElementById('statusFilter').addEventListener('change', filterTable);
+
+        // トップへ戻るボタンクリック時の動作
+        document.getElementById('back-to-top').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
     </script>
 </body>
 </html>

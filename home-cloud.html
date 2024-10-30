@@ -10,13 +10,13 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
-            padding-top: 75px; /* ヘッダーの高さ分だけ上部にパディングを追加 */
+            padding-top: 100px; /* ヘッダーの高さ分だけ上部にパディングを追加 */
         }
         header {
             background-color: #2c3e50;
             color: white;
-            padding: 15px;
-            text-align: left; /* 左寄せ */
+            padding: 30px; /* ヘッダーの縦幅を広げる */
+            text-align: center; /* 中央寄せ */
             position: fixed; /* ヘッダーを固定 */
             top: 0; /* 上部に固定 */
             left: 0; /* 左に固定 */
@@ -31,6 +31,9 @@
         .breadcrumb {
             margin-top: 10px;
             font-size: 16px;
+            position: absolute; /* 絶対位置に変更 */
+            left: 15px; /* 左端に配置 */
+            top: 70px; /* ヘッダーの下に配置 */
         }
         .breadcrumb a {
             color: white;
@@ -96,37 +99,69 @@
         .dropdown-content a:hover {
             background-color: #ddd;
         }
-        .back-button a {
-            text-decoration: none;
-        }
         .back-button {
             margin-top: 50px;
+        }
+        /* トップへ戻るボタンのスタイル */
+        .back-button a {
+            text-decoration: none;
+            background-color: #3498db;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .back-button a:hover {
+            background-color: #2980b9;
+        }
+        /* ↑ボタンのスタイル */
+        #back-to-top {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background-color: rgba(52, 152, 219, 0.7); /* 透けて見える背景 */
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            text-align: center;
+            z-index: 1000;
+        }
+        #back-to-top:hover {
+            background-color: rgba(41, 128, 185, 0.7); /* ホバー時の透けた色 */
         }
     </style>
     <script>
         function toggleDropdown(button) {
-            // 全てのボタンを取得
             const allButtons = document.querySelectorAll('.button');
-            
-            // クリックされたボタン以外のボタンのメニューを閉じる
             allButtons.forEach(btn => {
                 if (btn !== button) {
                     btn.classList.remove('active');
                 }
             });
-            
-            // クリックされたボタンのメニューをトグル（開閉）する
             button.classList.toggle('active');
         }
 
         function updateBreadcrumb(page) {
             const breadcrumb = document.getElementById("breadcrumb");
-            breadcrumb.innerHTML = <a href="index.html">トップページ</a> ＞＞ ${page} ＞＞;
+            breadcrumb.innerHTML = '<a href="index.html">トップページ</a> ＞＞ ' + page + ' ＞＞';
         }
 
-        // ページが読み込まれたときにパンくずリストを初期化
         document.addEventListener("DOMContentLoaded", function() {
             updateBreadcrumb("各種申請");
+
+            // トップへ戻るボタンクリック時の動作
+            document.getElementById('back-to-top').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
         });
     </script>
 </head>
@@ -135,7 +170,7 @@
 <header>
     <h1>ホームクラウド</h1>
     <div class="breadcrumb" id="breadcrumb">
-        <a href="index.html">トップページ</a> ＞＞ 各種申請 ＞＞
+        <a href="index.html">トップページ</a> ＞＞ 各種申請 ＞＞ 
     </div>
 </header>
 
@@ -179,30 +214,17 @@
             <span class="hamburger">☰</span>
             <div class="dropdown-content">
                 <a href="#" onclick="updateBreadcrumb('性能・容量監視申請')">性能・容量監視申請</a>
-                <a href="#" onclick="updateBreadcrumb('死活監視申請')">死活監視申請</a>
-                <a href="#" onclick="updateBreadcrumb('WEBレスポンス監視申請')">WEBレスポンス監視申請</a>
-                <a href="#" onclick="updateBreadcrumb('プロセス監視申請')">プロセス監視申請</a>
-                <a href="#" onclick="updateBreadcrumb('警告アラートメール送信先設定')">警告アラートメール送信先設定</a>
-                <a href="#" onclick="updateBreadcrumb('任意ログ監視申請')">任意ログ監視申請</a>
-            </div>
-        </div>
-        <div class="button" onclick="toggleDropdown(this)">
-            Azureネットワーク申請
-            <span class="hamburger">☰</span>
-            <div class="dropdown-content">
-                <a href="#" onclick="updateBreadcrumb('案件登録・IPアドレス配番申請')">案件登録・IPアドレス配番申請</a>
-                <a href="#" onclick="updateBreadcrumb('通信用件申請')">通信用件申請</a>
+                <a href="#" onclick="updateBreadcrumb('ジョブ実行監視申請')">ジョブ実行監視申請</a>
+                <a href="#" onclick="updateBreadcrumb('テスト環境利用監視申請')">テスト環境利用監視申請</a>
             </div>
         </div>
     </div>
-
-    <!-- トップページに戻るボタン -->
     <div class="back-button">
-        <a href="index.html">
-            <button class="button">トップページに戻る</button>
-        </a>
+        <a href="index.html">トップページに戻る</a>
     </div>
 </div>
+
+<button id="back-to-top">↑</button>
 
 </body>
 </html>
