@@ -23,6 +23,19 @@
             font-size: 24px;
             font-weight: bold;
         }
+        .breadcrumb {
+            margin-top: 10px;
+            font-size: 16px;
+            text-align: left; /* ここを変更 */
+            padding-left: 15px; /* 左側の余白を追加 */
+        }
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
         .container {
             margin: 20px;
         }
@@ -77,6 +90,9 @@
 <body>
     <header>
         <h1>ホームクラウド - 申請履歴一覧</h1>
+        <div class="breadcrumb">
+            <a href="index.html">トップページ</a> ＞＞ 申請履歴一覧
+        </div>
     </header>
 
     <div class="container">

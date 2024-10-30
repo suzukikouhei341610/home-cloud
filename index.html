@@ -16,12 +16,21 @@
             color: white;
             padding: 15px;
             text-align: center;
+            position: relative;
         }
         h1 {
             color: white;
             margin: 0;
             font-size: 24px;
             font-weight: bold;
+        }
+        .breadcrumb {
+            position: absolute; /* 絶対位置 */
+            left: 10px; /* 左端に配置 */
+            top: 50%; /* ヘッダーの中央に配置 */
+            transform: translateY(-50%); /* 垂直方向の中央に調整 */
+            font-size: 16px;
+            color: white;
         }
         .container {
             display: block;
@@ -122,6 +131,9 @@
 <body>
 <header>
     <h1>クラウドポータル</h1>
+    <div class="breadcrumb" id="breadcrumb">
+        <a href="index.html" style="color: white; text-decoration: none;">トップページ</a> ＞＞ 
+    </div>
 </header>
 
 <div class="important-notice">
@@ -133,9 +145,9 @@
     <div class="dashboard">
         <h1>ホームクラウド</h1>
         <div class="buttons">
-            <a href="home-cloud.html">
+            <a href="home-cloud.html" onclick="updateBreadcrumb('ホームクラウド各種申請')">
                 <button class="button">各種申請</button></a>
-            <a href="index_HomeCloudHistory.html">
+            <a href="index_HomeCloudHistory.html" onclick="updateBreadcrumb('ホームクラウド申請履歴')">
                 <button class="button">申請履歴一覧</button>
             </a>
         </div>
@@ -145,14 +157,21 @@
     <div class="dashboard">
         <h1>DL-AWS</h1>
         <div class="buttons">
-            <a href="aws-cloud.html">
+            <a href="aws-cloud.html" onclick="updateBreadcrumb('DL-AWS各種申請')">
                 <button class="button">各種申請</button></a>
-            <a href="index_DL-AWSHistory.html">
+            <a href="index_DL-AWSHistory.html" onclick="updateBreadcrumb('DL-AWS申請履歴')">
                 <button class="button">申請履歴一覧</button>
             </a>
         </div>
     </div>
 </div>
+
+<script>
+    function updateBreadcrumb(page) {
+        const breadcrumb = document.getElementById("breadcrumb");
+        breadcrumb.innerHTML = `<a href="index.html" style="color: white; text-decoration: none;">トップページ</a> ＞＞ ${page} ＞＞`;
+    }
+</script>
 
 <!-- サイド通知 -->
 <div class="notice-sidebar">
