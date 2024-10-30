@@ -114,7 +114,7 @@
             <a href="index.html">トップページ</a> ＞＞ 申請履歴一覧
         </div>
     </header>
-
+ 
     <div class="container">
         <!-- フィルター機能 -->
         <div class="filter">
@@ -129,7 +129,7 @@
             </select>
             <button onclick="clearFilters()">クリア</button>
         </div>
-
+ 
         <div class="history-table">
             <h2>申請履歴</h2>
             <table id="historyTable">
@@ -178,57 +178,48 @@
             </a>
         </div>
     </div>
-
+ 
     <script>
+        let sortAscending = true;
+ 
+        function sortTableByDate() {
+            const table = document.getElementById("historyTable");
+            const rows = Array.from(table.rows).slice(1);
+ 
+            rows.sort((rowA, rowB) => {
+                const dateA = new Date(rowA.cells[1].textContent);
+                const dateB = new Date(rowB.cells[1].textContent);
+                return sortAscending ? dateA - dateB : dateB - dateA;
+            });
+ 
+            rows.forEach(row => table.appendChild(row));
+            sortAscending = !sortAscending;
+        }
+ 
         function filterTable() {
             const applicant = document.getElementById('applicantFilter').value.toLowerCase();
             const approver = document.getElementById('approverFilter').value.toLowerCase();
             const content = document.getElementById('contentFilter').value.toLowerCase();
             const status = document.getElementById('statusFilter').value;
-
-            const table = document.getElementById('historyTable').getElementsByTagName('tbody')[0];
+ 
+            const table = document.getElementById('historyTable');
             const rows = table.getElementsByTagName('tr');
-
-            for (let i = 0; i < rows.length; i++) {
+ 
+            for (let i = 1; i < rows.length; i++) {
                 const cells = rows[i].getElementsByTagName('td');
                 const applicantText = cells[3].textContent.toLowerCase();
                 const approverText = cells[4].textContent.toLowerCase();
                 const contentText = cells[2].textContent.toLowerCase();
                 const statusText = cells[5].textContent;
-
-                rows[i].style.display = 
+ 
+                rows[i].style.display =
                     (applicant === '' || applicantText.includes(applicant)) &&
                     (approver === '' || approverText.includes(approver)) &&
                     (content === '' || contentText.includes(content)) &&
                     (status === '' || statusText === status) ? '' : 'none';
             }
         }
-
-        function clearFilters() {
-            document.getElementById('applicantFilter').value = '';
-            document.getElementById('approverFilter').value = '';
-            document.getElementById('contentFilter').value = '';
-            document.getElementById('statusFilter').value = '';
-            filterTable(); // テーブルのフィルタリングをリセットして再表示
-        }
-
-        let sortAscending = true;
-
-        function sortTable() {
-            const table = document.getElementById('historyTable').getElementsByTagName('tbody')[0];
-            const rows = Array.from(table.getElementsByTagName('tr'));
-
-            rows.sort((a, b) => {
-                const dateA = new Date(a.cells[1].textContent);
-                const dateB = new Date(b.cells[1].textContent);
-                return sortAscending ? dateA - dateB : dateB - dateA;
-            });
-
-            sortAscending = !sortAscending;
-
-            rows.forEach(row => table.appendChild(row));
-        }
-
+ 
         document.getElementById('applicantFilter').addEventListener('input', filterTable);
         document.getElementById('approverFilter').addEventListener('input', filterTable);
         document.getElementById('contentFilter').addEventListener('input', filterTable);
