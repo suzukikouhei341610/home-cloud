@@ -26,8 +26,8 @@
         .breadcrumb {
             margin-top: 10px;
             font-size: 16px;
-            text-align: left; /* ここを変更 */
-            padding-left: 15px; /* 左側の余白を追加 */
+            text-align: left;
+            padding-left: 15px;
         }
         .breadcrumb a {
             color: white;
@@ -47,7 +47,7 @@
         .filter input, .filter select {
             padding: 10px;
             font-size: 16px;
-            width: 30%;
+            width: 22%;
             margin-right: 10px;
         }
         .history-table {
@@ -71,6 +71,15 @@
         .history-table th {
             background-color: #3498db;
             color: white;
+        }
+        .sort-button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            margin-left: 5px;
         }
         .back-button {
             background-color: #3498db;
@@ -100,6 +109,7 @@
         <div class="filter">
             <input type="text" id="applicantFilter" placeholder="申請者でフィルター">
             <input type="text" id="approverFilter" placeholder="承認者でフィルター">
+            <input type="text" id="contentFilter" placeholder="申請内容でフィルター">
             <select id="statusFilter">
                 <option value="">全てのステータス</option>
                 <option value="承認済み">承認済み</option>
@@ -113,7 +123,10 @@
             <table id="historyTable">
                 <tr>
                     <th>申請ID</th>
-                    <th>申請日</th>
+                    <th>
+                        申請日
+                        <button class="sort-button" onclick="sortTableByDate()">⇅</button>
+                    </th>
                     <th>申請内容</th>
                     <th>申請者</th>
                     <th>承認者</th>
@@ -151,9 +164,26 @@
     </div>
 
     <script>
+        let sortAscending = true;
+
+        function sortTableByDate() {
+            const table = document.getElementById("historyTable");
+            const rows = Array.from(table.rows).slice(1);
+
+            rows.sort((rowA, rowB) => {
+                const dateA = new Date(rowA.cells[1].textContent);
+                const dateB = new Date(rowB.cells[1].textContent);
+                return sortAscending ? dateA - dateB : dateB - dateA;
+            });
+
+            rows.forEach(row => table.appendChild(row));
+            sortAscending = !sortAscending;
+        }
+
         function filterTable() {
             const applicant = document.getElementById('applicantFilter').value.toLowerCase();
             const approver = document.getElementById('approverFilter').value.toLowerCase();
+            const content = document.getElementById('contentFilter').value.toLowerCase();
             const status = document.getElementById('statusFilter').value;
 
             const table = document.getElementById('historyTable');
@@ -163,17 +193,20 @@
                 const cells = rows[i].getElementsByTagName('td');
                 const applicantText = cells[3].textContent.toLowerCase();
                 const approverText = cells[4].textContent.toLowerCase();
+                const contentText = cells[2].textContent.toLowerCase();
                 const statusText = cells[5].textContent;
 
                 rows[i].style.display = 
                     (applicant === '' || applicantText.includes(applicant)) &&
                     (approver === '' || approverText.includes(approver)) &&
+                    (content === '' || contentText.includes(content)) &&
                     (status === '' || statusText === status) ? '' : 'none';
             }
         }
 
         document.getElementById('applicantFilter').addEventListener('input', filterTable);
         document.getElementById('approverFilter').addEventListener('input', filterTable);
+        document.getElementById('contentFilter').addEventListener('input', filterTable);
         document.getElementById('statusFilter').addEventListener('change', filterTable);
     </script>
 </body>
