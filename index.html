@@ -33,9 +33,10 @@
             color: white;
         }
         .container {
-            display: block; /* 縦並びに設定 */
-            margin: 20px auto; /* 上下の余白を20px、左右を自動調整 */
-            max-width: 600px; /* 幅を保持 */
+            display: block;
+            margin: 20px auto;
+            max-width: 800px; /* 幅を800pxに設定 */
+            padding-right: 280px; /* サイドバーのスペースを考慮 */
         }
         .dashboard {
             background-color: white;
@@ -44,14 +45,14 @@
             padding: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
-            margin-bottom: 20px; /* 下の余白を追加 */
+            margin-bottom: 20px;
         }
         .dashboard h1 {
             color: #2c3e50;
             margin: 0;
         }
         .buttons {
-            margin-top: 20px; /* ボタン間の余白を調整 */
+            margin-top: 20px;
         }
         .button {
             background-color: #3498db;
@@ -78,23 +79,23 @@
             font-size: 20px;
             font-weight: bold;
             border-radius: 5px;
-            max-width: 800px; /* 幅を保持 */
-            margin-left: auto; /* 左右の余白を自動調整 */
-            margin-right: auto; /* 左右の余白を自動調整 */
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 20px; 
         }
         /* サイド通知 */
         .notice-sidebar {
-            width: 250px; /* 固定幅 */
-            max-height: 400px; /* 最大高さを設定 */
-            overflow-y: auto; /* 縦スクロールを許可 */
+            width: 290px;
+            max-height: 340px;
+            overflow-y: auto;
             background-color: #f4f4f4;
             border: 1px solid #ccc;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             padding: 10px;
-            position: absolute; /* 固定位置 */
-            right: 20px; /* 右側に余白 */
-            top: 185px; /* 上からの余白 */
+            position: fixed;
+            right: 20px;
+            top: 175px;
         }
         .notice-sidebar h2 {
             background-color: #333;

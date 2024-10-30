@@ -26,8 +26,8 @@
         .breadcrumb {
             margin-top: 10px;
             font-size: 16px;
-            text-align: left; /* ここを変更 */
-            padding-left: 15px; /* 左側の余白を追加 */
+            text-align: left;
+            padding-left: 15px;
         }
         .breadcrumb a {
             color: white;
@@ -47,7 +47,7 @@
         .filter input, .filter select {
             padding: 10px;
             font-size: 16px;
-            width: 30%;
+            width: 22%;
             margin-right: 10px;
         }
         .history-table {
@@ -72,6 +72,15 @@
             background-color: #3498db;
             color: white;
         }
+        .sort-button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            margin-left: 5px;
+        }
         .back-button {
             background-color: #3498db;
             color: white;
@@ -85,24 +94,6 @@
         .back-button:hover {
             background-color: #2980b9;
         }
-        /* ↑ボタンのスタイル */
-        #back-to-top {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            background-color: rgba(52, 152, 219, 0.7); /* 透けて見える背景 */
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 24px;
-            text-align: center;
-            z-index: 1000;
-        }
-        #back-to-top:hover {
-            background-color: rgba(41, 128, 185, 0.7); /* ホバー時の透けた色 */
-        }
     </style>
 </head>
 <body>
@@ -112,12 +103,13 @@
             <a href="index.html">トップページ</a> ＞＞ 申請履歴一覧
         </div>
     </header>
-
+ 
     <div class="container">
         <!-- フィルター機能 -->
         <div class="filter">
             <input type="text" id="applicantFilter" placeholder="申請者でフィルター">
             <input type="text" id="approverFilter" placeholder="承認者でフィルター">
+            <input type="text" id="contentFilter" placeholder="申請内容でフィルター">
             <select id="statusFilter">
                 <option value="">全てのステータス</option>
                 <option value="承認済み">承認済み</option>
@@ -125,13 +117,16 @@
                 <option value="却下">却下</option>
             </select>
         </div>
-
+ 
         <div class="history-table">
             <h2>申請履歴</h2>
             <table id="historyTable">
                 <tr>
                     <th>申請ID</th>
-                    <th>申請日</th>
+                    <th>
+                        申請日
+                        <button class="sort-button" onclick="sortTableByDate()">⇅</button>
+                    </th>
                     <th>申請内容</th>
                     <th>申請者</th>
                     <th>承認者</th>
@@ -167,43 +162,52 @@
             </a>
         </div>
     </div>
-
-    <!-- ↑ボタン -->
-    <button id="back-to-top">↑</button>
-
+ 
     <script>
+        let sortAscending = true;
+ 
+        function sortTableByDate() {
+            const table = document.getElementById("historyTable");
+            const rows = Array.from(table.rows).slice(1);
+ 
+            rows.sort((rowA, rowB) => {
+                const dateA = new Date(rowA.cells[1].textContent);
+                const dateB = new Date(rowB.cells[1].textContent);
+                return sortAscending ? dateA - dateB : dateB - dateA;
+            });
+ 
+            rows.forEach(row => table.appendChild(row));
+            sortAscending = !sortAscending;
+        }
+ 
         function filterTable() {
             const applicant = document.getElementById('applicantFilter').value.toLowerCase();
             const approver = document.getElementById('approverFilter').value.toLowerCase();
+            const content = document.getElementById('contentFilter').value.toLowerCase();
             const status = document.getElementById('statusFilter').value;
-
+ 
             const table = document.getElementById('historyTable');
             const rows = table.getElementsByTagName('tr');
-
+ 
             for (let i = 1; i < rows.length; i++) {
                 const cells = rows[i].getElementsByTagName('td');
                 const applicantText = cells[3].textContent.toLowerCase();
                 const approverText = cells[4].textContent.toLowerCase();
+                const contentText = cells[2].textContent.toLowerCase();
                 const statusText = cells[5].textContent;
-
-                rows[i].style.display = 
+ 
+                rows[i].style.display =
                     (applicant === '' || applicantText.includes(applicant)) &&
                     (approver === '' || approverText.includes(approver)) &&
+                    (content === '' || contentText.includes(content)) &&
                     (status === '' || statusText === status) ? '' : 'none';
             }
         }
-
+ 
         document.getElementById('applicantFilter').addEventListener('input', filterTable);
         document.getElementById('approverFilter').addEventListener('input', filterTable);
+        document.getElementById('contentFilter').addEventListener('input', filterTable);
         document.getElementById('statusFilter').addEventListener('change', filterTable);
-
-        // トップへ戻るボタンクリック時の動作
-        document.getElementById('back-to-top').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
     </script>
 </body>
 </html>
