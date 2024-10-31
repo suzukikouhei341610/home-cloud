@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ホームクラウド - 申請履歴一覧</title>
     <style>
+        /* スタイル */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -26,8 +27,8 @@
         .breadcrumb {
             margin-top: 10px;
             font-size: 16px;
-            text-align: left; /* ここを変更 */
-            padding-left: 15px; /* 左側の余白を追加 */
+            text-align: left;
+            padding-left: 15px;
         }
         .breadcrumb a {
             color: white;
@@ -42,22 +43,37 @@
         .filter {
             margin-bottom: 20px;
             display: flex;
-            justify-content: space-between;
-        }
-        .filter input, .filter select {
-            padding: 10px;
-            font-size: 16px;
-            width: 20%;
-            margin-right: 10px;
+            align-items: center;
         }
         .filter button {
             padding: 10px;
             font-size: 16px;
-            cursor: pointer;
-            background-color: #3498db;
-            color: white;
+            margin-right: 10px;
             border: none;
             border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .filter button#addFilter {
+            background-color: #3498db; /* フィルター追加ボタンの色 */
+            color: white;
+        }
+        .filter button#addFilter:hover {
+            background-color: #2980b9; /* ホバー時の色 */
+        }
+        .filter button#clearFilters {
+            background-color: #e74c3c; /* クリアボタンの色 */
+            color: white;
+        }
+        .filter button#clearFilters:hover {
+            background-color: #c0392b; /* ホバー時の色 */
+        }
+        #filterContainer select,
+        #filterContainer input {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+            width: 300px; /* 幅を広げる */
         }
         .history-table {
             background-color: white;
@@ -80,17 +96,6 @@
         .history-table th {
             background-color: #3498db;
             color: white;
-            position: relative;
-        }
-        .sort-button {
-            cursor: pointer;
-            font-size: 14px;
-            color: white;
-            margin-left: 5px;
-            padding: 2px 6px;
-            background-color: #2980b9;
-            border: none;
-            border-radius: 3px;
         }
         .back-button {
             background-color: #3498db;
@@ -105,24 +110,6 @@
         .back-button:hover {
             background-color: #2980b9;
         }
-        /* ↑ボタンのスタイル */
-        #back-to-top {
-            position: fixed;
-            right: 20px;
-            bottom: 20px;
-            background-color: rgba(52, 152, 219, 0.7); /* 透けて見える背景 */
-            color: white;
-            padding: 15px;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 24px;
-            text-align: center;
-            z-index: 1000;
-        }
-        #back-to-top:hover {
-            background-color: rgba(41, 128, 185, 0.7); /* ホバー時の透けた色 */
-        }
     </style>
 </head>
 <body>
@@ -134,29 +121,21 @@
     </header>
 
     <div class="container">
-        <!-- フィルター機能 -->
+        <!-- フィルター追加機能 -->
         <div class="filter">
-            <input type="text" id="applicantFilter" placeholder="申請者でフィルター">
-            <input type="text" id="approverFilter" placeholder="承認者でフィルター">
-            <select id="statusFilter">
-                <option value="">全てのステータス</option>
-                <option value="承認済み">承認済み</option>
-                <option value="処理中">処理中</option>
-                <option value="却下">却下</option>
-            </select>
-            <button onclick="clearFilters()">クリア</button>
+            <button id="addFilter" onclick="showFilterDropdown()">＋フィルターを追加</button>
+            <button id="clearFilters" onclick="clearFilters()">クリア</button>
         </div>
+        <div id="filterContainer"></div>
 
+        <!-- 申請履歴テーブル -->
         <div class="history-table">
             <h2>申請履歴</h2>
             <table id="historyTable">
                 <thead>
                     <tr>
                         <th>申請ID</th>
-                        <th>
-                            申請日
-                            <button class="sort-button" onclick="sortTable()">▲▼</button>
-                        </th>
+                        <th>申請日</th>
                         <th>申請内容</th>
                         <th>申請者</th>
                         <th>承認者</th>
@@ -196,42 +175,106 @@
         </div>
     </div>
 
-    <!-- ↑ボタン -->
-    <button id="back-to-top">↑</button>
-
     <script>
+        function showFilterDropdown() {
+            const filterContainer = document.getElementById("filterContainer");
+            
+            // 既存のプルダウンメニューがある場合は削除
+            if (document.getElementById("filterSelect")) {
+                filterContainer.removeChild(document.getElementById("filterSelect"));
+            }
+
+            const filterSelect = document.createElement("select");
+            filterSelect.id = "filterSelect";
+            filterSelect.innerHTML = `
+                <option value="" disabled selected>フィルターを選択</option>
+                <option value="申請者">申請者</option>
+                <option value="承認者">承認者</option>
+                <option value="申請内容">申請内容</option>
+                <option value="ステータス">ステータス</option>
+            `;
+            filterSelect.addEventListener("change", addFilter);
+            filterContainer.appendChild(filterSelect);
+        }
+
+        function addFilter() {
+            const selectedFilter = document.getElementById("filterSelect").value;
+            const filterContainer = document.getElementById("filterContainer");
+
+            let filterElement;
+
+            switch (selectedFilter) {
+                case '申請者':
+                    filterElement = document.createElement('input');
+                    filterElement.placeholder = "申請者でフィルター";
+                    filterElement.id = 'applicantFilter';
+                    filterElement.addEventListener('input', filterTable);
+                    break;
+                case '承認者':
+                    filterElement = document.createElement('input');
+                    filterElement.placeholder = "承認者でフィルター";
+                    filterElement.id = 'approverFilter';
+                    filterElement.addEventListener('input', filterTable);
+                    break;
+                case '申請内容':
+                    filterElement = document.createElement('input');
+                    filterElement.placeholder = "申請内容でフィルター";
+                    filterElement.id = 'contentFilter';
+                    filterElement.addEventListener('input', filterTable);
+                    break;
+                case 'ステータス':
+                    filterElement = document.createElement('select');
+                    filterElement.id = 'statusFilter';
+                    filterElement.innerHTML = `
+                        <option value="">全てのステータス</option>
+                        <option value="承認済み">承認済み</option>
+                        <option value="処理中">処理中</option>
+                        <option value="却下">却下</option>
+                    `;
+                    filterElement.addEventListener('change', filterTable);
+                    break;
+                default:
+                    return;
+            }
+
+            // 追加されたフィルター選択メニューを削除
+            filterContainer.removeChild(document.getElementById("filterSelect"));
+            filterContainer.appendChild(filterElement);
+        }
+
         function filterTable() {
-            const applicant = document.getElementById('applicantFilter').value.toLowerCase();
-            const approver = document.getElementById('approverFilter').value.toLowerCase();
-            const status = document.getElementById('statusFilter').value;
+            const applicant = document.getElementById('applicantFilter')?.value.toLowerCase() || '';
+            const approver = document.getElementById('approverFilter')?.value.toLowerCase() || '';
+            const content = document.getElementById('contentFilter')?.value.toLowerCase() || '';
+            const status = document.getElementById('statusFilter')?.value || '';
 
             const table = document.getElementById('historyTable');
             const rows = table.getElementsByTagName('tr');
 
             for (let i = 1; i < rows.length; i++) {
-                const cells = rows[i].getElementsByTagName('td');
-                const applicantText = cells[3].textContent.toLowerCase();
-                const approverText = cells[4].textContent.toLowerCase();
-                const statusText = cells[5].textContent;
+                const row = rows[i];
+                const applicantText = row.cells[3].textContent.toLowerCase();
+                const approverText = row.cells[4].textContent.toLowerCase();
+                const contentText = row.cells[2].textContent.toLowerCase();
+                const statusText = row.cells[5].textContent;
 
-                rows[i].style.display = 
-                    (applicant === '' || applicantText.includes(applicant)) &&
-                    (approver === '' || approverText.includes(approver)) &&
-                    (status === '' || statusText === status) ? '' : 'none';
+                row.style.display = (
+                    (applicantText.includes(applicant) || !applicant) &&
+                    (approverText.includes(approver) || !approver) &&
+                    (contentText.includes(content) || !content) &&
+                    (statusText === status || status === '')
+                ) ? '' : 'none';
             }
         }
 
-        document.getElementById('applicantFilter').addEventListener('input', filterTable);
-        document.getElementById('approverFilter').addEventListener('input', filterTable);
-        document.getElementById('statusFilter').addEventListener('change', filterTable);
-
-        // トップへ戻るボタンクリック時の動作
-        document.getElementById('back-to-top').addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
+        function clearFilters() {
+            document.getElementById("filterContainer").innerHTML = '';
+            const table = document.getElementById('historyTable');
+            const rows = table.getElementsByTagName('tr');
+            for (let i = 1; i < rows.length; i++) {
+                rows[i].style.display = ''; // すべての行を表示
+            }
+        }
     </script>
 </body>
 </html>
