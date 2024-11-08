@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クラウドポータル</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: relative;
+        }
+        h1 {
+            color: white;
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .important-notice {
+            background-color: #e74c3c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+        .notice-sidebar-right-wrapper, .notice-sidebar-left-wrapper {
+            position: fixed;
+            width: 600px;
+            top: 175px;
+        }
+        .notice-sidebar-right-wrapper {
+            right: 20px;
+        }
+        .notice-sidebar-left-wrapper {
+            left: 20px;
+        }
+        .notice-sidebar-title {
+            background-color: transparent;
+            color: black;
+            padding: 10px;
+            font-size: 16px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .notice-sidebar {
+            max-height: 340px;
+            overflow-y: auto;
+            background-color: #f4f4f4;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+        }
+        .notice-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #ccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .notice-item:last-child {
+            border-bottom: none;
+        }
+        .notice-item a {
+            color: #3498db;
+            text-decoration: none;
+            font-size: 14px;
+            flex-grow: 1;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        .notice-item a:hover {
+            text-decoration: underline;
+        }
+        .notice-date {
+            font-size: 12px;
+            color: #666;
+            margin-right: 10px;
+            white-space: nowrap;
+        }
+        .hamburger-menu {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+        }
+        .menu-content {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #333;
+            color: white;
+            padding-top: 60px;
+            z-index: 10;
+        }
+        .menu-content a {
+            padding: 10px 20px;
+            display: block;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .menu-content a:hover {
+            background-color: #575757;
+        }
+        .submenu {
+            display: none;
+            background-color: #444;
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>クラウドポータル</h1>
+    <div class="hamburger-menu" onclick="toggleMenu()">☰</div>
+</header>
+
+<div class="important-notice">
+    重要なお知らせ: 緊急メンテナンスのため、10月30日の午前1時から午前5時まで全サービスが停止します。
+</div>
+
+<div class="menu-content" id="menuContent">
+    <a href="#" onclick="toggleSubmenu('homeCloudSubmenu')">ホームクラウド</a>
+    <div id="homeCloudSubmenu" class="submenu">
+        <a href="home-cloud.html">各種申請</a>
+        <a href="index_HomeCloudHistory.html">申請履歴一覧</a>
+    </div>
+    <a href="#" onclick="toggleSubmenu('dlAwsSubmenu')">DL-AWS</a>
+    <div id="dlAwsSubmenu" class="submenu">
+        <a href="aws-cloud.html">各種申請</a>
+        <a href="index_DL-AWSHistory.html">申請履歴一覧</a>
+    </div>
+</div>
+
+<script>
+    function toggleMenu() {
+        const menuContent = document.getElementById("menuContent");
+        menuContent.style.display = menuContent.style.display === "block" ? "none" : "block";
+    }
+
+    function toggleSubmenu(submenuId) {
+        const submenu = document.getElementById(submenuId);
+        submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+    }
+
+    window.onclick = function(event) {
+        const menuContent = document.getElementById("menuContent");
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        if (event.target !== menuContent && event.target !== hamburgerMenu && !menuContent.contains(event.target)) {
+            menuContent.style.display = "none";
+        }
+    };
+</script>
+
+<div class="notice-sidebar-right-wrapper">
+    <div class="notice-sidebar-title">ＤＬ－ＡＷＳお知らせ</div>
+    <div class="notice-sidebar">
+        <div class="notice-item"><span class="notice-date">2024/10/28</span><a href="#">システムメンテナンスのお知らせ。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/26</span><a href="#">DL-AWS新機能リリース。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/24</span><a href="#">使用方法に関する変更のお知らせ。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/23</span><a href="#">DL-AWSのサーバー増強について。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/20</span><a href="#">障害復旧のお知らせ。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/18</span><a href="#">メンテナンス完了。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/15</span><a href="#">利用規約変更のお知らせ。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/12</span><a href="#">新サービス提供開始。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/10</span><a href="#">アップデート予定のお知らせ。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/08</span><a href="#">緊急メンテナンス完了。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/06</span><a href="#">新システム導入について。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/04</span><a href="#">サポートサービス拡充のお知らせ。</a></div>
+    </div>
+</div>
+
+<div class="notice-sidebar-left-wrapper">
+    <div class="notice-sidebar-title">ホームクラウドお知らせ</div>
+    <div class="notice-sidebar">
+        <div class="notice-item"><span class="notice-date">2024/10/28</span><a href="#">システムメンテナンスのお知らせ。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/27</span><a href="#">新しいバックアップ機能について。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/25</span><a href="#">利用規約変更のお知らせ。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/22</span><a href="#">新しいクラウドサービス提供開始。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/20</span><a href="#">障害についてのお知らせ。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/18</span><a href="#">メンテナンス完了のご案内。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/15</span><a href="#">新規機能リリース。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/12</span><a href="#">データ保存容量の増加。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/10</span><a href="#">定期メンテナンスの予定。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/08</span><a href="#">アップデート完了。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/06</span><a href="#">セキュリティ対策強化について。</a></div>
+        <div class="notice-item"><span class="notice-date">2024/10/04</span><a href="#">サポート窓口の営業時間変更。</a></div>
+    </div>
+</div>
+
+</body>
+</html>
