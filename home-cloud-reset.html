@@ -12,12 +12,15 @@
             padding: 0;
         }
 
-        /* ヘッダースタイル */
         header {
             background-color: #2c3e50;
             color: white;
             padding: 15px;
             text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
         h1 {
@@ -26,7 +29,6 @@
             font-weight: bold;
         }
 
-        /* パンくずリスト */
         .breadcrumb {
             margin-top: 10px;
             font-size: 16px;
@@ -45,15 +47,21 @@
             text-decoration: underline;
         }
 
-        /* フォームコンテナ */
         .form-container {
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 25px 20px;
-            background-color: #e8f4fc; /* 背景色を薄い青色に変更 */
+            max-width: 1000px;
+            margin: 120px auto 40px;
+            padding: 20px;
+            background-color: #e8f4fc;
             border-radius: 10px;
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-content {
+            display: flex;
+            gap: 20px;
         }
 
         .form-container:hover {
@@ -61,11 +69,10 @@
         }
 
         fieldset {
-            margin-bottom: 20px;
-            padding: 15px;
+            flex: 1;
+            padding: 10px; /* フィールドセットのパディングを減らす */
             border: 1px solid #d1d1d1;
             border-radius: 8px;
-            overflow: hidden;
         }
 
         legend {
@@ -76,16 +83,16 @@
 
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 4px; /* ラベル下の隙間を狭く */
             font-size: 15px;
             color: #333;
             font-weight: bold;
         }
 
         input, select, textarea {
-            width: calc(100% - 24px); /* ラベルと入力欄が枠内に収まるように調整 */
-            padding: 12px;
-            margin-bottom: 15px;
+            width: calc(100% - 10px); /* 入力フィールドの横幅を調整 */
+            padding: 8px; /* 入力フィールドのパディングを減らす */
+            margin-bottom: 10px; /* 入力フィールド下の隙間を狭く */
             border: 1px solid #d1d1d1;
             border-radius: 6px;
             font-size: 15px;
@@ -99,9 +106,14 @@
             background-color: #f0f8ff;
         }
 
+        .button-container {
+            text-align: right;
+            margin-top: 10px;
+        }
+
         button {
-            width: 100%;
-            padding: 14px;
+            width: 30%;
+            padding: 12px; /* ボタンのパディングを調整 */
             background-color: #4a90e2;
             color: #fff;
             border: none;
@@ -119,7 +131,6 @@
 </head>
 <body>
 
-    <!-- ヘッダー -->
     <header>
         <h1>ホームクラウド - Azureパスワードリセット申請</h1>
         <div class="breadcrumb">
@@ -129,43 +140,46 @@
         </div>
     </header>
 
-    <!-- フォームコンテナ -->
     <div class="form-container">
-        <form action="home-cloud-f.html" method="GET"> <!-- actionを修正 -->
-            <fieldset>
-                <legend>申請者情報</legend>
-                <label for="employeeId">社員番号:</label>
-                <input type="text" id="employeeId" name="employeeId" required>
+        <form action="home-cloud-f.html" method="GET">
+            <div class="form-content">
+                <fieldset>
+                    <legend>申請者情報</legend>
+                    <label for="employeeId">社員番号:</label>
+                    <input type="text" id="employeeId" name="employeeId" required>
 
-                <label for="name">氏名:</label>
-                <input type="text" id="name" name="name" required>
+                    <label for="name">氏名:</label>
+                    <input type="text" id="name" name="name" required>
 
-                <label for="department">所属:</label>
-                <input type="text" id="department" name="department" required>
+                    <label for="department">所属:</label>
+                    <input type="text" id="department" name="department" required>
 
-                <label for="extension">内線:</label>
-                <input type="text" id="extension" name="extension" required>
-            </fieldset>
+                    <label for="extension">内線:</label>
+                    <input type="text" id="extension" name="extension" required>
+                </fieldset>
+                
+                <fieldset>
+                    <legend>申請内容</legend>
+                    <label for="targetId">対象ID:</label>
+                    <input type="text" id="targetId" name="targetId" required>
+
+                    <label for="environment">環境:</label>
+                    <select id="environment" name="environment" required>
+                        <option value="ST">ST</option>
+                        <option value="本番">本番</option>
+                    </select>
+
+                    <label for="preferredDate">作業希望日:</label>
+                    <input type="date" id="preferredDate" name="preferredDate" required>
+
+                    <label for="reason">申請理由:</label>
+                    <textarea id="reason" name="reason" rows="3" required></textarea>
+                </fieldset>
+            </div>
             
-            <fieldset>
-                <legend>申請内容</legend>
-                <label for="targetId">対象ID:</label>
-                <input type="text" id="targetId" name="targetId" required>
-
-                <label for="environment">環境:</label>
-                <select id="environment" name="environment" required>
-                    <option value="ST">ST</option>
-                    <option value="本番">本番</option>
-                </select>
-
-                <label for="preferredDate">作業希望日:</label>
-                <input type="date" id="preferredDate" name="preferredDate" required>
-
-                <label for="reason">申請理由:</label>
-                <textarea id="reason" name="reason" rows="4" required></textarea>
-            </fieldset>
-
-            <button type="submit">申請</button>
+            <div class="button-container">
+                <button type="submit">申請</button>
+            </div>
         </form>
     </div>
 
