@@ -10,88 +10,222 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            padding-top: 100px; /* ヘッダーの高さ分だけ上部にパディングを追加 */
         }
         header {
             background-color: #2c3e50;
             color: white;
-            padding: 15px;
-            text-align: center;
+            padding: 30px; /* ヘッダーの縦幅を広げる */
+            text-align: center; /* 中央寄せ */
+            position: fixed; /* ヘッダーを固定 */
+            top: 0; /* 上部に固定 */
+            left: 0; /* 左に固定 */
+            width: 100%; /* 幅を100%に設定 */
+            z-index: 1000; /* 他のコンテンツの上に表示されるようにする */
         }
         h1 {
             margin: 0;
             font-size: 24px;
             font-weight: bold;
         }
+        .breadcrumb {
+            margin-top: 10px;
+            font-size: 16px;
+            position: absolute; /* 絶対位置に変更 */
+            left: 15px; /* 左端に配置 */
+            top: 70px; /* ヘッダーの下に配置 */
+        }
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 50px;
+            margin-top: 50px; /* ヘッダーの下にスペースを確保 */
         }
         .button-container {
-            display: grid;
-            grid-template-columns: repeat(4, 250px); /* ボタンの幅を統一 */
-            gap: 20px; /* ボタン間の距離 */
-            justify-content: center;
-            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 600px;
         }
         .button {
             background-color: #3498db;
             color: white;
-            padding: 30px 0; /* 縦幅を広げるためにパディングを調整 */
+            padding: 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px; /* フォントサイズを調整 */
-            text-align: center;
-            box-sizing: border-box;
-            white-space: nowrap; /* テキストを折り返さない */
-            min-width: 250px; /* ボタンの最小幅を設定してサイズを統一 */
+            font-size: 18px;
+            font-weight: bold;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: relative;
         }
         .button:hover {
             background-color: #2980b9;
         }
+        .hamburger {
+            font-size: 24px;
+        }
+        .dropdown-content {
+            display: none;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+        }
+        .button.active .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            text-decoration: none;
+            display: block;
+            padding: 8px 16px;
+            color: #2c3e50;
+        }
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
         .back-button {
             margin-top: 50px;
         }
+        /* トップへ戻るボタンのスタイル */
+        .back-button a {
+            text-decoration: none;
+            background-color: #3498db;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .back-button a:hover {
+            background-color: #2980b9;
+        }
+        /* ↑ボタンのスタイル */
+        #back-to-top {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background-color: rgba(52, 152, 219, 0.7); /* 透けて見える背景 */
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            text-align: center;
+            z-index: 1000;
+        }
+        #back-to-top:hover {
+            background-color: rgba(41, 128, 185, 0.7); /* ホバー時の透けた色 */
+        }
     </style>
+    <script>
+        function toggleDropdown(button) {
+            const allButtons = document.querySelectorAll('.button');
+            allButtons.forEach(btn => {
+                if (btn !== button) {
+                    btn.classList.remove('active');
+                }
+            });
+            button.classList.toggle('active');
+        }
+
+        function updateBreadcrumb(page) {
+            const breadcrumb = document.getElementById("breadcrumb");
+            breadcrumb.innerHTML = '<a href="index.html">トップページ</a> ＞＞ ' + page + ' ＞＞';
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updateBreadcrumb("各種申請");
+
+            // トップへ戻るボタンクリック時の動作
+            document.getElementById('back-to-top').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 
-    <header>
-        <h1>ホームクラウド</h1>
-    </header>
+<header>
+    <h1>ホームクラウド</h1>
+    <div class="breadcrumb" id="breadcrumb">
+        <a href="index.html">トップページ</a> ＞＞ 各種申請 ＞＞ 
+    </div>
+</header>
 
-    <div class="container">
-        <h2>各種申請</h2>
-        <div class="button-container">
-            <a href="home-cloud-applicoaction.html">
-                <button class="button">アプリ運用</button>
-            </a>
-            <a href="home-cloud-infra.html">
-                <button class="button">Azureインフラ運用</button>
-            </a>
-            <a href="home-cloud-ad.html">
-                <button class="button">AzureAD申請</button>
-            </a>
-            <a href="home-cloud-monitor.html">
-                <button class="button">Azure監視申請</button>
-            </a>
-            <a href="home-cloud-net.html">
-                <button class="button">Azureネットワーク申請</button>
-            </a>
-            <a href="home-cloud-view.html">
-                <button class="button">運用担当者ビュー</button>
-            </a>
+<div class="container">
+    <h2>各種申請</h2>
+    <div class="button-container">
+        <div class="button" onclick="toggleDropdown(this)">
+            アプリ運用
+            <span class="hamburger">☰</span>
+            <div class="dropdown-content">
+                <a href="#" onclick="updateBreadcrumb('デプロイ申請システム利用申請')">デプロイ申請システム利用申請</a>
+                <a href="#" onclick="updateBreadcrumb('作業依頼票')">作業依頼票</a>
+            </div>
         </div>
-
-        <!-- トップページに戻るボタン -->
-        <div class="back-button">
-            <a href="index.html">
-                <button class="button">トップページに戻る</button>
-            </a>
+        <div class="button" onclick="toggleDropdown(this)">
+            Azureインフラ運用
+            <span class="hamburger">☰</span>
+            <div class="dropdown-content">
+                <a href="#" onclick="updateBreadcrumb('DNSレコード登録申請')">DNSレコード登録申請</a>
+                <a href="#" onclick="updateBreadcrumb('ジョブ実行エージェント申請')">ジョブ実行エージェント申請</a>
+                <a href="#" onclick="updateBreadcrumb('ジョブ定義手動反映申請')">ジョブ定義手動反映申請</a>
+                <a href="#" onclick="updateBreadcrumb('ビルトインアドミンパスワード開示申請')">ビルトインアドミンパスワード開示申請</a>
+                <a href="#" onclick="updateBreadcrumb('システムコード作成・紐づけ申請')">システムコード作成・紐づけ申請</a>
+                <a href="#" onclick="updateBreadcrumb('Azureリストア申請')">Azureリストア申請</a>
+                <a href="#" onclick="updateBreadcrumb('Azureバックアップ取得申請')">Azureバックアップ取得申請</a>
+            </div>
+        </div>
+        <div class="button" onclick="toggleDropdown(this)">
+            AzureAD申請
+            <span class="hamburger">☰</span>
+            <div class="dropdown-content">
+                <a href="#" onclick="updateBreadcrumb('Azureアカウント登録申請')">Azureアカウント登録申請</a>
+                <a href="#" onclick="updateBreadcrumb('Azureグループメンバー変更申請')">Azureグループメンバー変更申請</a>
+                <a href="home-cloud-reset.html">Azureアカウントパスワードリセット申請</a>
+                <a href="#" onclick="updateBreadcrumb('AzureDevOpsグループ（組織）登録申請')">AzureDevOpsグループ（組織）登録申請</a>
+                <a href="#" onclick="updateBreadcrumb('ホームクラウドJP1利用申請')">ホームクラウドJP1利用申請</a>
+            </div>
+        </div>
+        
+        <div class="button" onclick="toggleDropdown(this)">
+            Azure監視申請
+            <span class="hamburger">☰</span>
+            <div class="dropdown-content">
+                <a href="#" onclick="updateBreadcrumb('性能・容量監視申請')">性能・容量監視申請</a>
+                <a href="#" onclick="updateBreadcrumb('ジョブ実行監視申請')">ジョブ実行監視申請</a>
+                <a href="#" onclick="updateBreadcrumb('テスト環境利用監視申請')">テスト環境利用監視申請</a>
+            </div>
         </div>
     </div>
+    <div class="back-button">
+        <a href="index.html">トップページに戻る</a>
+    </div>
+</div>
+
+<button id="back-to-top">↑</button>
 
 </body>
 </html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azureアカウントパスワードリセット申請</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ヘッダースタイル */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* パンくずリスト */
+        .breadcrumb {
+            margin-top: 10px;
+            font-size: 16px;
+            text-align: left;
+            padding-left: 15px;
+            color: white;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* フォームコンテナ */
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 25px 20px;
+            background-color: #e8f4fc; /* 背景色を薄い青色に変更 */
+            border-radius: 10px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .form-container:hover {
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        fieldset {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #d1d1d1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        legend {
+            font-weight: bold;
+            color: #4a90e2;
+            padding: 0 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: calc(100% - 24px); /* ラベルと入力欄が枠内に収まるように調整 */
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #d1d1d1;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: #fafafa;
+            box-sizing: border-box;
+            transition: border 0.3s, background-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #4a90e2;
+            background-color: #f0f8ff;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #357ab8;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header>
+        <h1>ホームクラウド - Azureパスワードリセット申請</h1>
+        <div class="breadcrumb">
+            <a href="index.html">トップページ</a> ＞＞ 
+            <a href="home-cloud.html">各種申請</a> ＞＞ 
+            Azureパスワードリセット申請
+        </div>
+    </header>
+
+    <!-- フォームコンテナ -->
+    <div class="form-container">
+        <form action="home-cloud-f.html" method="GET"> <!-- actionを修正 -->
+            <fieldset>
+                <legend>申請者情報</legend>
+                <label for="employeeId">社員番号:</label>
+                <input type="text" id="employeeId" name="employeeId" required>
+
+                <label for="name">氏名:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="department">所属:</label>
+                <input type="text" id="department" name="department" required>
+
+                <label for="extension">内線:</label>
+                <input type="text" id="extension" name="extension" required>
+            </fieldset>
+            
+            <fieldset>
+                <legend>申請内容</legend>
+                <label for="targetId">対象ID:</label>
+                <input type="text" id="targetId" name="targetId" required>
+
+                <label for="environment">環境:</label>
+                <select id="environment" name="environment" required>
+                    <option value="ST">ST</option>
+                    <option value="本番">本番</option>
+                </select>
+
+                <label for="preferredDate">作業希望日:</label>
+                <input type="date" id="preferredDate" name="preferredDate" required>
+
+                <label for="reason">申請理由:</label>
+                <textarea id="reason" name="reason" rows="4" required></textarea>
+            </fieldset>
+
+            <button type="submit">申請</button>
+        </form>
+    </div>
+
+</body>
+</html>
