@@ -10,23 +10,43 @@
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
+            padding-top: 100px; /* ヘッダーの高さ分だけ上部にパディングを追加 */
         }
         header {
             background-color: #2c3e50;
             color: white;
-            padding: 15px;
-            text-align: center;
+            padding: 30px; /* ヘッダーの縦幅を広げる */
+            text-align: center; /* 中央寄せ */
+            position: fixed; /* ヘッダーを固定 */
+            top: 0; /* 上部に固定 */
+            left: 0; /* 左に固定 */
+            width: 100%; /* 幅を100%に設定 */
+            z-index: 1000; /* 他のコンテンツの上に表示されるようにする */
         }
         h1 {
             margin: 0;
-            font-size: 24px;
+            font-size: 31px;
             font-weight: bold;
+        }
+        .breadcrumb {
+            margin-top: 10px;
+            font-size: 16px;
+            position: absolute; /* 絶対位置に変更 */
+            left: 15px; /* 左端に配置 */
+            top: 60px; /* ヘッダーの下に配置 */
+        }
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        .breadcrumb a:hover {
+            text-decoration: underline;
         }
         .container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 50px;
+            margin-top: 50px; /* ヘッダーの下にスペースを確保 */
         }
         .button-container {
             display: flex;
@@ -79,80 +99,114 @@
         .dropdown-content a:hover {
             background-color: #ddd;
         }
-        .back-button a {
-            text-decoration: none;
-        }
         .back-button {
             margin-top: 50px;
+        }
+        /* トップへ戻るボタンのスタイル */
+        .back-button a {
+            text-decoration: none;
+            background-color: #3498db;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .back-button a:hover {
+            background-color: #2980b9;
+        }
+        /* ↑ボタンのスタイル */
+        #back-to-top {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            background-color: rgba(52, 152, 219, 0.7); /* 透けて見える背景 */
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            text-align: center;
+            z-index: 1000;
+        }
+        #back-to-top:hover {
+            background-color: rgba(41, 128, 185, 0.7); /* ホバー時の透けた色 */
         }
     </style>
     <script>
         function toggleDropdown(button) {
-            // 全てのボタンを取得
             const allButtons = document.querySelectorAll('.button');
-            
-            // クリックされたボタン以外のボタンのメニューを閉じる
             allButtons.forEach(btn => {
                 if (btn !== button) {
                     btn.classList.remove('active');
                 }
             });
-            
-            // クリックされたボタンのメニューをトグル（開閉）する
             button.classList.toggle('active');
         }
+
+        function updateBreadcrumb(page) {
+            const breadcrumb = document.getElementById("breadcrumb");
+            breadcrumb.innerHTML = '<a href="index.html">トップページ</a> ＞＞ ' + page + ' ＞＞';
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            updateBreadcrumb("各種申請");
+
+            // トップへ戻るボタンクリック時の動作
+            document.getElementById('back-to-top').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
     </script>
 </head>
 <body>
 
-    <header>
-        <h1>DL-AWS</h1>
-    </header>
+<header>
+    <h1>DL-AWS</h1>
+    <div class="breadcrumb" id="breadcrumb">
+        <a href="index.html">トップページ</a> ＞＞ 各種申請 ＞＞ 
+    </div>
+</header>
 
-    <div class="container">
-        <h2>各種申請</h2>
-        <div class="button-container">
-            <div class="button" onclick="toggleDropdown(this)">
-                利用申請
-                <span class="hamburger">☰</span>
-                <div class="dropdown-content">
-                    <a href="#">新規利用申請</a>
-                    <a href="#">変更申請</a>
-                </div>
-            </div>
-            <div class="button" onclick="toggleDropdown(this)">
-                デプロイ申請
-                <span class="hamburger">☰</span>
-                <div class="dropdown-content">
-                    <a href="#">デプロイ手順書提出</a>
-                    <a href="#">デプロイスケジュール調整</a>
-                </div>
-            </div>
-            <div class="button" onclick="toggleDropdown(this)">
-                JP1申請
-                <span class="hamburger">☰</span>
-                <div class="dropdown-content">
-                    <a href="#">ジョブ登録申請</a>
-                    <a href="#">ジョブスケジュール変更</a>
-                </div>
-            </div>
-            <div class="button" onclick="toggleDropdown(this)">
-                その他申請
-                <span class="hamburger">☰</span>
-                <div class="dropdown-content">
-                    <a href="#">アクセス権限申請</a>
-                    <a href="#">バックアップ申請</a>
-                </div>
+<div class="container">
+    <h2>各種申請</h2>
+    <div class="button-container">
+        <div class="button" onclick="toggleDropdown(this)">
+            ジャンル１
+            <span class="hamburger">☰</span>
+            <div class="dropdown-content">
+                <a href="#" onclick="updateBreadcrumb('AWSアカウント利用登録/削除申請')">AWSアカウント利用登録/削除申請</a>
+                <a href="#" onclick="updateBreadcrumb('IAM Identity Center登録/削除申請')">IAM Identity Center登録/削除申請</a>
+                <a href="#" onclick="updateBreadcrumb('中継用ファイルサーバー ユーザー登録/削除申請')">中継用ファイルサーバー ユーザー登録/削除申請</a>
             </div>
         </div>
-
-        <!-- トップページに戻るボタン -->
-        <div class="back-button">
-            <a href="index.html">
-                <button class="button">トップページに戻る</button>
-            </a>
+        <div class="button" onclick="toggleDropdown(this)">
+            ジャンル２
+            <span class="hamburger">☰</span>
+            <div class="dropdown-content">
+                <a href="#" onclick="updateBreadcrumb('ネットワーク接続申請')">ネットワーク接続申請</a>
+                <a href="#" onclick="updateBreadcrumb('外部サイト接続申請')">外部サイト接続申請</a>
+                <a href="#" onclick="updateBreadcrumb('DNS登録申請')">DNS登録申請</a>
+                <a href="#" onclick="updateBreadcrumb('(基盤利用者向け)IAMIdentityCenterユーザー特権申請')">(基盤利用者向け)IAMIdentityCenterユーザー特権申請</a>
+                <a href="#" onclick="updateBreadcrumb('外部証明書発行申請')">外部証明書発行申請</a>
+                <a href="#" onclick="updateBreadcrumb('社内標準サーバー証明書')">社内標準サーバー証明書</a>
+                <a href="#" onclick="updateBreadcrumb('IAMユーザーアクセスキー登録削除申請')">IAMユーザーアクセスキー登録削除申請</a>
+                <a href="#" onclick="updateBreadcrumb('WAFルール切替申請')">WAFルール切替申請</a>
+            </div>
         </div>
     </div>
+    <div class="back-button">
+        <a href="index.html">トップページに戻る</a>
+    </div>
+</div>
+
+<button id="back-to-top">↑</button>
 
 </body>
 </html>
