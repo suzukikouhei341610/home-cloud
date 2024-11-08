@@ -55,25 +55,25 @@
             transition: background-color 0.3s;
         }
         .filter button#addFilter {
-            background-color: #3498db; /* フィルター追加ボタンの色 */
+            background-color: #3498db;
             color: white;
         }
         .filter button#addFilter:hover {
-            background-color: #2980b9; /* ホバー時の色 */
+            background-color: #2980b9;
         }
         .filter button#clearFilters {
-            background-color: #e74c3c; /* クリアボタンの色 */
+            background-color: #e74c3c;
             color: white;
         }
         .filter button#clearFilters:hover {
-            background-color: #c0392b; /* ホバー時の色 */
+            background-color: #c0392b;
         }
         #filterContainer select,
         #filterContainer input {
             padding: 10px;
             font-size: 16px;
             margin-right: 10px;
-            width: 300px; /* 幅を広げる */
+            width: 300px;
         }
         .history-table {
             background-color: white;
@@ -110,6 +110,20 @@
         .back-button:hover {
             background-color: #2980b9;
         }
+        /* 並び替えボタンのスタイル */
+        .sort-button {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .sort-button:hover {
+            background-color: #2980b9;
+        }
     </style>
 </head>
 <body>
@@ -135,7 +149,10 @@
                 <thead>
                     <tr>
                         <th>申請ID</th>
-                        <th>申請日</th>
+                        <th>
+                            申請日
+                            <button class="sort-button" onclick="toggleSortOrder()" id="sortIndicator">▲</button>
+                        </th>
                         <th>申請内容</th>
                         <th>申請者</th>
                         <th>承認者</th>
@@ -176,9 +193,28 @@
     </div>
 
     <script>
+        let isAscending = true;  // 初期状態で昇順
+
+        function toggleSortOrder() {
+            const table = document.getElementById('historyTable');
+            const rows = Array.from(table.getElementsByTagName('tr')).slice(1); // ヘッダー行を除外
+            rows.sort((a, b) => {
+                const dateA = new Date(a.cells[1].textContent);
+                const dateB = new Date(b.cells[1].textContent);
+                return isAscending ? dateA - dateB : dateB - dateA;
+            });
+
+            rows.forEach(row => table.appendChild(row));
+            isAscending = !isAscending;
+
+            // ソート指標を更新
+            const sortIndicator = document.getElementById('sortIndicator');
+            sortIndicator.textContent = isAscending ? '▲' : '▼';  // 昇順：▲、降順：▼
+        }
+
         function showFilterDropdown() {
             const filterContainer = document.getElementById("filterContainer");
-            
+
             // 既存のプルダウンメニューがある場合は削除
             if (document.getElementById("filterSelect")) {
                 filterContainer.removeChild(document.getElementById("filterSelect"));
@@ -226,54 +262,44 @@
                     filterElement = document.createElement('select');
                     filterElement.id = 'statusFilter';
                     filterElement.innerHTML = `
-                        <option value="">全てのステータス</option>
+                        <option value="">すべて</option>
                         <option value="承認済み">承認済み</option>
                         <option value="処理中">処理中</option>
                         <option value="却下">却下</option>
                     `;
                     filterElement.addEventListener('change', filterTable);
                     break;
-                default:
-                    return;
             }
 
-            // 追加されたフィルター選択メニューを削除
-            filterContainer.removeChild(document.getElementById("filterSelect"));
-            filterContainer.appendChild(filterElement);
+            if (filterElement) filterContainer.appendChild(filterElement);
         }
 
         function filterTable() {
-            const applicant = document.getElementById('applicantFilter')?.value.toLowerCase() || '';
-            const approver = document.getElementById('approverFilter')?.value.toLowerCase() || '';
-            const content = document.getElementById('contentFilter')?.value.toLowerCase() || '';
-            const status = document.getElementById('statusFilter')?.value || '';
+            const applicantFilter = document.getElementById('applicantFilter')?.value.toLowerCase() || '';
+            const approverFilter = document.getElementById('approverFilter')?.value.toLowerCase() || '';
+            const contentFilter = document.getElementById('contentFilter')?.value.toLowerCase() || '';
+            const statusFilter = document.getElementById('statusFilter')?.value || '';
 
-            const table = document.getElementById('historyTable');
-            const rows = table.getElementsByTagName('tr');
+            const rows = document.querySelectorAll('#historyTable tbody tr');
 
-            for (let i = 1; i < rows.length; i++) {
-                const row = rows[i];
-                const applicantText = row.cells[3].textContent.toLowerCase();
-                const approverText = row.cells[4].textContent.toLowerCase();
-                const contentText = row.cells[2].textContent.toLowerCase();
-                const statusText = row.cells[5].textContent;
+            rows.forEach(row => {
+                const applicant = row.cells[3].textContent.toLowerCase();
+                const approver = row.cells[4].textContent.toLowerCase();
+                const content = row.cells[2].textContent.toLowerCase();
+                const status = row.cells[5].textContent;
 
-                row.style.display = (
-                    (applicantText.includes(applicant) || !applicant) &&
-                    (approverText.includes(approver) || !approver) &&
-                    (contentText.includes(content) || !content) &&
-                    (statusText === status || status === '')
-                ) ? '' : 'none';
-            }
+                row.style.display = 
+                    (applicant.includes(applicantFilter)) &&
+                    (approver.includes(approverFilter)) &&
+                    (content.includes(contentFilter)) &&
+                    (statusFilter === '' || status === statusFilter)
+                    ? '' : 'none';
+            });
         }
 
         function clearFilters() {
-            document.getElementById("filterContainer").innerHTML = '';
-            const table = document.getElementById('historyTable');
-            const rows = table.getElementsByTagName('tr');
-            for (let i = 1; i < rows.length; i++) {
-                rows[i].style.display = ''; // すべての行を表示
-            }
+            document.getElementById('filterContainer').innerHTML = '';
+            filterTable();
         }
     </script>
 </body>
