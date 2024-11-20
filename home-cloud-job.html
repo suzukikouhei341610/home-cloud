@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>申請フォーム</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9fc;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .breadcrumb {
+            margin-top: 10px;
+            font-size: 16px;
+            text-align: left;
+            padding-left: 15px;
+            color: white;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .form-container {
+            max-width: 1000px;
+            margin: 120px auto 40px;
+            padding: 20px;
+            background-color: #e8f4fc;
+            border-radius: 10px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        fieldset {
+            padding: 10px;
+            border: 1px solid #d1d1d1;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            font-weight: bold;
+            color: #4a90e2;
+            padding: 0 5px;
+        }
+
+        label {
+            font-size: 15px;
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input, select, textarea {
+            width: calc(100% - 10px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #d1d1d1;
+            border-radius: 6px;
+            font-size: 15px;
+            background-color: #fafafa;
+            box-sizing: border-box;
+            transition: border 0.3s, background-color 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #4a90e2;
+            background-color: #f0f8ff;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .radio-group input {
+            margin: 0;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .button-container {
+            text-align: right;
+            margin-top: 10px;
+        }
+
+        button {
+            width: 30%;
+            padding: 12px;
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #357ab8;
+        }
+
+        .three-columns {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .three-columns input {
+            width: 30%;
+        }
+
+        .vertical-inputs {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>申請フォーム</h1>
+        <div class="breadcrumb">
+            <a href="#">トップページ</a> ＞＞ 
+            <a href="#">各種申請</a> ＞＞ 
+            申請フォーム
+        </div>
+    </header>
+
+    <div class="form-container">
+        <form action="#" method="GET">
+            <div class="form-content">
+                <!-- 申請者情報 -->
+                <fieldset>
+                    <legend>申請者情報</legend>
+                    <label for="employeeId">社員番号:</label>
+                    <input type="text" id="employeeId" name="employeeId" required>
+
+                    <label for="name">氏名:</label>
+                    <input type="text" id="name" name="name" required>
+
+                    <label for="department">所属:</label>
+                    <input type="text" id="department" name="department" required>
+
+                    <label for="extension">内線:</label>
+                    <input type="text" id="extension" name="extension" required>
+                </fieldset>
+
+                <!-- 申請内容 -->
+                <fieldset>
+                    <legend>申請内容</legend>
+
+                    <label>環境:</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="environment" value="ST" required> ST</label>
+                        <label><input type="radio" name="environment" value="本番"> 本番</label>
+                    </div>
+
+                    <label for="reason">申請理由:</label>
+                    <textarea id="reason" name="reason" rows="3" required></textarea>
+
+                    <label for="desiredDate">反映希望日:</label>
+                    <input type="date" id="desiredDate" name="desiredDate" required>
+
+                    <label for="confirmation">確認事項:</label>
+                    <textarea id="confirmation" name="confirmation" rows="3" required></textarea>
+
+                    <!-- NO1～10の項目 -->
+                    <div class="vertical-inputs">
+                        <label for="no1">NO1:</label>
+                        <input type="text" id="no1" name="no1">
+
+                        <label for="no2">NO2:</label>
+                        <input type="text" id="no2" name="no2">
+
+                        <label for="no3">NO3:</label>
+                        <input type="text" id="no3" name="no3">
+
+                        <label for="no4">NO4:</label>
+                        <input type="text" id="no4" name="no4">
+
+                        <label for="no5">NO5:</label>
+                        <input type="text" id="no5" name="no5">
+
+                        <label for="no6">NO6:</label>
+                        <input type="text" id="no6" name="no6">
+
+                        <label for="no7">NO7:</label>
+                        <input type="text" id="no7" name="no7">
+
+                        <label for="no8">NO8:</label>
+                        <input type="text" id="no8" name="no8">
+
+                        <label for="no9">NO9:</label>
+                        <input type="text" id="no9" name="no9">
+
+                        <label for="no10">NO10:</label>
+                        <input type="text" id="no10" name="no10">
+                    </div>
+
+                    <label>変更区分, 対象サーバー名（FQDN）, 実行多重度:</label>
+                    <div class="three-columns">
+                        <input type="text" name="changeType" placeholder="変更区分" required>
+                        <input type="text" name="serverName" placeholder="対象サーバー名（FQDN）" required>
+                        <input type="text" name="executionLevel" placeholder="実行多重度" required>
+                    </div>
+
+                    <label for="remarks">備考:</label>
+                    <textarea id="remarks" name="remarks" rows="3"></textarea>
+                </fieldset>
+            </div>
+            
+            <div class="button-container">
+                <button type="submit">申請</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
