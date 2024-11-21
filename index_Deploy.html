@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ビルトインアドミンパスワード開示申請</title>
+    <title>デプロイ申請システム利用申請</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -70,7 +70,7 @@
 
         fieldset {
             flex: 1;
-            padding: 10px; /* フィールドセットのパディングを減らす */
+            padding: 10px;
             border: 1px solid #d1d1d1;
             border-radius: 8px;
         }
@@ -83,16 +83,16 @@
 
         label {
             display: block;
-            margin-bottom: 4px; /* ラベル下の隙間を狭く */
+            margin-bottom: 4px;
             font-size: 15px;
             color: #333;
             font-weight: bold;
         }
 
         input, select, textarea {
-            width: calc(100% - 10px); /* 入力フィールドの横幅を調整 */
-            padding: 8px; /* 入力フィールドのパディングを減らす */
-            margin-bottom: 10px; /* 入力フィールド下の隙間を狭く */
+            width: calc(100% - 10px);
+            padding: 8px;
+            margin-bottom: 10px;
             border: 1px solid #d1d1d1;
             border-radius: 6px;
             font-size: 15px;
@@ -113,7 +113,7 @@
 
         button {
             width: 30%;
-            padding: 12px; /* ボタンのパディングを調整 */
+            padding: 12px;
             background-color: #4a90e2;
             color: #fff;
             border: none;
@@ -132,11 +132,11 @@
 <body>
 
     <header>
-        <h1>ホームクラウド - ビルトインアドミンパスワード開示申請</h1>
+        <h1>ホームクラウド - デプロイ申請システム利用申請</h1>
         <div class="breadcrumb">
             <a href="index.html">トップページ</a> ＞＞ 
             <a href="home-cloud.html">各種申請</a> ＞＞ 
-            ビルトインアドミンパスワード開示申請
+            デプロイ申請システム申請
         </div>
     </header>
 
@@ -160,13 +160,23 @@
                 
                 <fieldset>
                     <legend>申請内容</legend>
-                    <label for="targetId">対象ID:</label>
+                    <label for="targetId">システムコード:</label>
                     <input type="text" id="targetId" name="targetId" required>
 
-                    <label for="environment">環境:</label>
-                    <select id="environment" name="environment" required>
-                        <option value="ST">ST</option>
-                        <option value="本番">本番</option>
+                    <label for="applicationType">申請区分:</label>
+                    <select id="applicationType" name="applicationType" required>
+                        <option value="" disabled selected>--選択してください--</option>
+                        <option value="配布希望時刻（新規）申請">配布希望時刻（新規）申請</option>
+                        <option value="配布希望時刻（変更）申請">配布希望時刻（変更）申請</option>
+                        <option value="配布希望時刻（削除）申請">配布希望時刻（削除）申請</option>
+                        <option value="ユーザー情報（登録）申請">ユーザー情報（登録）申請</option>
+                        <option value="ユーザー情報（変更）申請">ユーザー情報（変更）申請</option>
+                        <option value="ユーザー情報（削除）申請">ユーザー情報（削除）申請</option>
+                        <option value="アカウント削除申請">アカウント削除申請</option>
+                        <option value="VMリソース（登録）申請">VMリソース（登録）申請</option>
+                        <option value="VMリソース（削除）申請">VMリソース（削除）申請</option>
+                        <option value="定期ジョブスキップ申請">定期ジョブスキップ申請</option>
+                        <option value="帳票生成機能利用申請">帳票生成機能利用申請</option>
                     </select>
 
                     <label for="preferredDate">作業希望日:</label>
