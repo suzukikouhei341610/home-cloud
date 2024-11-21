@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>申請フォーム</title>
+    <title>ジョブ実行エージェント申請</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,39 +29,15 @@
             font-weight: bold;
         }
 
-        .breadcrumb {
-            margin-top: 10px;
-            font-size: 16px;
-            text-align: left;
-            padding-left: 15px;
-            color: white;
-        }
-
-        .breadcrumb a {
-            color: white;
-            text-decoration: none;
-            margin: 0 5px;
-        }
-
-        .breadcrumb a:hover {
-            text-decoration: underline;
-        }
-
         .form-container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 120px auto 40px;
             padding: 20px;
             background-color: #e8f4fc;
             border-radius: 10px;
             box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s;
             display: flex;
-            flex-direction: column;
-        }
-
-        .form-content {
-            display: flex;
-            flex-direction: column;
+            gap: 20px;
         }
 
         fieldset {
@@ -85,7 +61,7 @@
             display: block;
         }
 
-        input, select, textarea {
+        input, textarea {
             width: calc(100% - 10px);
             padding: 8px;
             margin-bottom: 10px;
@@ -94,29 +70,32 @@
             font-size: 15px;
             background-color: #fafafa;
             box-sizing: border-box;
-            transition: border 0.3s, background-color 0.3s;
         }
 
-        input:focus, select:focus, textarea:focus {
+        input:focus, textarea:focus {
             border-color: #4a90e2;
             background-color: #f0f8ff;
         }
 
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            align-items: center;
+        .table-container {
+            overflow-x: auto;
         }
 
-        .radio-group label {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
         }
 
-        .radio-group input {
-            margin: 0;
+        table th, table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+
+        table th {
+            background-color: #f2f2f2;
+            font-weight: bold;
         }
 
         .checkbox-group {
@@ -125,9 +104,14 @@
             gap: 10px;
         }
 
-        .button-container {
-            text-align: right;
-            margin-top: 10px;
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-item input {
+            margin-right: 10px;
         }
 
         button {
@@ -147,119 +131,112 @@
             background-color: #357ab8;
         }
 
-        .three-columns {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .three-columns input {
-            width: 30%;
-        }
-
-        .vertical-inputs {
-            display: flex;
-            flex-direction: column;
+        .left-column, .right-column {
+            flex: 1;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>申請フォーム</h1>
-        <div class="breadcrumb">
-            <a href="#">トップページ</a> ＞＞ 
-            <a href="#">各種申請</a> ＞＞ 
-            申請フォーム
-        </div>
+        <h1>ジョブ実行エージェント申請</h1>
     </header>
 
     <div class="form-container">
-        <form action="#" method="GET">
-            <div class="form-content">
-                <!-- 申請者情報 -->
-                <fieldset>
-                    <legend>申請者情報</legend>
-                    <label for="employeeId">社員番号:</label>
-                    <input type="text" id="employeeId" name="employeeId" required>
+        <!-- 左側：申請者情報 -->
+        <div class="left-column">
+            <fieldset>
+                <legend>申請者情報</legend>
 
-                    <label for="name">氏名:</label>
-                    <input type="text" id="name" name="name" required>
+                <label for="employeeNumber">社員番号:</label>
+                <input type="text" id="employeeNumber" name="employeeNumber" required>
 
-                    <label for="department">所属:</label>
-                    <input type="text" id="department" name="department" required>
+                <label for="name">氏名:</label>
+                <input type="text" id="name" name="name" required>
 
-                    <label for="extension">内線:</label>
-                    <input type="text" id="extension" name="extension" required>
-                </fieldset>
+                <label for="department">所属:</label>
+                <input type="text" id="department" name="department" required>
 
-                <!-- 申請内容 -->
-                <fieldset>
-                    <legend>申請内容</legend>
+                <label for="extension">内線:</label>
+                <input type="text" id="extension" name="extension" required>
+            </fieldset>
+        </div>
 
-                    <label>環境:</label>
-                    <div class="radio-group">
-                        <label><input type="radio" name="environment" value="ST" required> ST</label>
-                        <label><input type="radio" name="environment" value="本番"> 本番</label>
+        <!-- 右側：申請内容 -->
+        <div class="right-column">
+            <fieldset>
+                <legend>申請内容</legend>
+
+                <label>環境:</label>
+                <div>
+                    <label><input type="radio" name="environment" value="ST" required> ST</label>
+                    <label><input type="radio" name="environment" value="本番"> 本番</label>
+                </div>
+
+                <label for="reason">申請理由:</label>
+                <textarea id="reason" name="reason" rows="3" required></textarea>
+
+                <label for="desiredDate">反映希望日:</label>
+                <input type="date" id="desiredDate" name="desiredDate" required>
+
+                <label>確認事項:</label>
+                <p>以下の内容をよく読み該当するチェック項目は確認のうえチェックを入れてください。</p>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check1" name="check1">
+                        <label for="check1">申請内容の妥当性を確認しました。</label>
                     </div>
-
-                    <label for="reason">申請理由:</label>
-                    <textarea id="reason" name="reason" rows="3" required></textarea>
-
-                    <label for="desiredDate">反映希望日:</label>
-                    <input type="date" id="desiredDate" name="desiredDate" required>
-
-                    <label for="confirmation">確認事項:</label>
-                    <textarea id="confirmation" name="confirmation" rows="3" required></textarea>
-
-                    <!-- NO1～10の項目 -->
-                    <div class="vertical-inputs">
-                        <label for="no1">NO1:</label>
-                        <input type="text" id="no1" name="no1">
-
-                        <label for="no2">NO2:</label>
-                        <input type="text" id="no2" name="no2">
-
-                        <label for="no3">NO3:</label>
-                        <input type="text" id="no3" name="no3">
-
-                        <label for="no4">NO4:</label>
-                        <input type="text" id="no4" name="no4">
-
-                        <label for="no5">NO5:</label>
-                        <input type="text" id="no5" name="no5">
-
-                        <label for="no6">NO6:</label>
-                        <input type="text" id="no6" name="no6">
-
-                        <label for="no7">NO7:</label>
-                        <input type="text" id="no7" name="no7">
-
-                        <label for="no8">NO8:</label>
-                        <input type="text" id="no8" name="no8">
-
-                        <label for="no9">NO9:</label>
-                        <input type="text" id="no9" name="no9">
-
-                        <label for="no10">NO10:</label>
-                        <input type="text" id="no10" name="no10">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check2" name="check2">
+                        <label for="check2">必要な情報はすべて入力済みです。</label>
                     </div>
-
-                    <label>変更区分, 対象サーバー名（FQDN）, 実行多重度:</label>
-                    <div class="three-columns">
-                        <input type="text" name="changeType" placeholder="変更区分" required>
-                        <input type="text" name="serverName" placeholder="対象サーバー名（FQDN）" required>
-                        <input type="text" name="executionLevel" placeholder="実行多重度" required>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check3" name="check3">
+                        <label for="check3">運用ポリシーを遵守しています。</label>
                     </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check4" name="check4">
+                        <label for="check4">内容を関係者に通知済みです。</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check5" name="check5">
+                        <label for="check5">スケジュール調整を実施済みです。</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="check6" name="check6">
+                        <label for="check6">その他必要な手続きが完了しています。</label>
+                    </div>
+                </div>
 
-                    <label for="remarks">備考:</label>
-                    <textarea id="remarks" name="remarks" rows="3"></textarea>
-                </fieldset>
-            </div>
-            
-            <div class="button-container">
-                <button type="submit">申請</button>
-            </div>
-        </form>
+                <label>変更内容:</label>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>NO</th>
+                                <th>変更区分</th>
+                                <th>対象サーバー名（FQDN）</th>
+                                <th>実行多重度</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td><input type="text" name="changeType1"></td>
+                                <td><input type="text" name="serverName1"></td>
+                                <td><input type="text" name="executionLevel1"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <label for="remarks">備考:</label>
+                <textarea id="remarks" name="remarks" rows="3"></textarea>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button type="submit">申請</button>
+                </div>
+            </fieldset>
+        </div>
     </div>
 </body>
 </html>
