@@ -145,21 +145,53 @@
             <div class="form-content">
                 <fieldset>
                     <legend>申請者情報</legend>
-                    <label for="employeeId">社員番号:</label>
-                    <input type="text" id="employeeId" name="employeeId" required>
 
-                    <label for="name">氏名:</label>
-                    <input type="text" id="name" name="name" required>
+                    <label for="application_date">申請日:</label>
+                    <input type="text" id="application_date" name="application_date" required>
 
-                    <label for="department">所属:</label>
+                    <label for="preferredDate">作業希望日:</label>
+                    <input type="date" id="preferredDate" name="preferredDate" required>
+
+                    <label for="application_sum">申請回数:</label>
+                    <select id="application_sum" name="application_sum" required>
+                        <option value="one">初回</option>
+                        <option value="mora_than_two">２回目以降</option>
+                    </select>
+
+                    <label for="company">会社名:</label>
+                    <input type="text" id="company" name="company" required>
+
+                    <label for="department">所属名:</label>
                     <input type="text" id="department" name="department" required>
 
-                    <label for="extension">内線:</label>
-                    <input type="text" id="extension" name="extension" required>
+                    <label for="RP_name">申請責任者名:</label>
+                    <input type="text" id="RP_name" name="RP_name" required>
+
+                    <label for="RP_email_address">申請責任者連絡先(メールアドレス):</label>
+                    <input type="text" id="RP_email_address" name="RP_email_address" required>
+
+                    <label for="RIC_name">申請担当者名:</label>
+                    <input type="text" id="RIC_name" name="RIC_name" required>
+
+                    <label for="RIC_email_address">申請担当者連絡先(メールアドレス):</label>
+                    <input type="text" id="RIC_email_address" name="RIC_email_address" required>
+
+                    <label for="phone_number">申請担当者電話番号</label>
+                    <input type="text" id="phone_number" name="phone_number" required>
+
                 </fieldset>
                 
                 <fieldset>
-                    <legend>申請内容</legend>
+                    <legend>システム情報</legend>
+
+                    <label for="system_name">システム名:</label>
+                    <input type="date" id="system_name" name="system_name" required>
+
+                    <label for="system_summary">システム概要:</label>
+                    <input type="date" id="system_summary" name="system_summary" required>
+
+                    <label for="system_code">システムコード:</label>
+                    <input type="date" id="system_summary" name="system_code" required>
 
                     <label for="environment">環境:</label>
                     <select id="environment" name="environment" required>
@@ -167,10 +199,19 @@
                         <option value="本番">本番</option>
                     </select>
 
-                    <label for="preferredDate">作業希望日:</label>
-                    <input type="date" id="preferredDate" name="preferredDate" required>
+                    <label for="environment">個人情報データの取り扱い:</label>
+                    <select id="environment" name="environment" required>
+                        <option value="ST">あり</option>
+                        <option value="本番">なし</option>
+                    </select>
 
-                    <label for="reason">申請理由:</label>
+                    <label for="environment">機微情報データの取り扱い:</label>
+                    <select id="environment" name="environment" required>
+                        <option value="ST">あり</option>
+                        <option value="本番">なし</option>
+                    </select>
+
+                    <label for="reason">外部サイト名(ワイルドカード利用可能):</label>
                     <textarea id="reason" name="reason" rows="3" required></textarea>
                 </fieldset>
             </div>
