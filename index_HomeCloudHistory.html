@@ -136,7 +136,7 @@
 </head>
 <body>
     <header>
-        <h1>ホームクラウド - 申請履歴一覧</h1>
+        <h1>ホームクラウド - Azureアカウントパスワードリセット申請 履歴</h1>
         <div class="breadcrumb">
             <a href="index.html">トップページ</a> ＞＞ 申請履歴一覧
         </div>
@@ -247,43 +247,45 @@
         function applyFilter(filterType, value) {
             const rows = document.querySelectorAll('#historyTable tbody tr');
             rows.forEach(row => {
-                const cells = Array.from(row.cells);
-                let targetIndex;
+                const cells = row.children;
+                let columnIndex;
+
                 switch (filterType) {
-                    case '承認者': targetIndex = 4; break;
-                    case '申請者': targetIndex = 3; break;
-                    case 'ステータス': targetIndex = 5; break;
+                    case '承認者': columnIndex = 4; break;
+                    case '申請者': columnIndex = 3; break;
+                    case 'ステータス': columnIndex = 5; break;
                     default: return;
                 }
-                row.style.display = cells[targetIndex].textContent.includes(value) ? '' : 'none';
+
+                const cellValue = cells[columnIndex].textContent || cells[columnIndex].innerText;
+                row.style.display = cellValue.includes(value) ? '' : 'none';
             });
         }
 
         function clearFilters() {
-            document.querySelectorAll('#historyTable tbody tr').forEach(row => row.style.display = '');
+            const rows = document.querySelectorAll('#historyTable tbody tr');
+            rows.forEach(row => row.style.display = '');
+
             const filterContainer = document.getElementById('filterContainer');
             filterContainer.innerHTML = '';
         }
 
-        // 並び替えの切り替え
-        let sortAscending = true;
+        let sortOrderAsc = true;
         function toggleSortOrder() {
-            const sortIndicator = document.getElementById('sortIndicator');
-            sortAscending = !sortAscending;
-            sortIndicator.textContent = sortAscending ? '▲' : '▼';
-            sortTable();
-        }
+            const rows = Array.from(document.querySelectorAll('#historyTable tbody tr'));
+            rows.sort((a, b) => {
+                const dateA = new Date(a.children[1].textContent.trim());
+                const dateB = new Date(b.children[1].textContent.trim());
 
-        function sortTable() {
-            const table = document.getElementById('historyTable');
-            const rows = Array.from(table.querySelectorAll('tbody tr'));
-            rows.sort((rowA, rowB) => {
-                const dateA = new Date(rowA.cells[1].textContent);
-                const dateB = new Date(rowB.cells[1].textContent);
-                return sortAscending ? dateA - dateB : dateB - dateA;
+                return sortOrderAsc ? dateA - dateB : dateB - dateA;
             });
 
-            rows.forEach(row => table.querySelector('tbody').appendChild(row));
+            const tbody = document.querySelector('#historyTable tbody');
+            tbody.innerHTML = '';
+            rows.forEach(row => tbody.appendChild(row));
+
+            sortOrderAsc = !sortOrderAsc;
+            document.getElementById('sortIndicator').textContent = sortOrderAsc ? '▲' : '▼';
         }
     </script>
 </body>
