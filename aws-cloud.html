@@ -191,7 +191,11 @@
             <span class="hamburger">☰</span>
             <div class="dropdown-content">
                 <a href="#" onclick="updateBreadcrumb('ネットワーク接続申請')">ネットワーク接続申請</a>
-                <a href="#" onclick="updateBreadcrumb('外部サイト接続申請')">外部サイト接続申請</a>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <a style="flex-grow: 1;" onclick="updateBreadcrumb('外部サイト接続申請')">外部サイト接続申請</a>
+                    <button class="action-button" onclick="window.location.href='external-site-request.html'">申請</button>
+                    <button class="action-button" onclick="window.location.href='external-site-history.html'">申請履歴</button>
+                </div>
                 <a href="#" onclick="updateBreadcrumb('DNS登録申請')">DNS登録申請</a>
                 <a href="#" onclick="updateBreadcrumb('(基盤利用者向け)IAMIdentityCenterユーザー特権申請')">(基盤利用者向け)IAMIdentityCenterユーザー特権申請</a>
                 <a href="#" onclick="updateBreadcrumb('外部証明書発行申請')">外部証明書発行申請</a>

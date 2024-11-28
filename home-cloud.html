@@ -176,7 +176,11 @@
             <span class="hamburger">☰</span>
             <div class="dropdown-content">
                 <a href="index_DNSRecord.html">DNSレコード登録申請</a>
-                <a href="home-cloud-job.html">ジョブ実行エージェント申請</a>
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <a style="flex-grow: 1;">ジョブ実行エージェント申請</a>
+                    <button class="action-button" onclick="window.location.href='home-cloud-job.html'">申請</button>
+                    <button class="action-button" onclick="window.location.href='index_HomecloudJobHistory.html'">申請履歴</button>
+                </div>
             </div>
         </div>
         <div class="button" onclick="toggleDropdown(this)">
