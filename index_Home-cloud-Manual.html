@@ -3,21 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>マニュアル置き場</title>
+    <title>クラウドポータル - マニュアル置き場</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-color: #f4f4f4;
             margin: 0;
-            padding: 20px;
+            padding: 0;
+        }
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            position: relative;
         }
         h1 {
-            text-align: center;
-            color: #333;
+            color: white;
+            margin: 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .breadcrumbs {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 14px;
+        }
+        .breadcrumbs a {
+            color: #ddd;
+            text-decoration: none;
+        }
+        .breadcrumbs a:hover {
+            text-decoration: underline;
         }
         .container {
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 800px;
+            margin: 20px auto;
             background: #fff;
             border-radius: 8px;
             padding: 20px;
@@ -55,66 +77,71 @@
     </style>
 </head>
 <body>
+<header>
     <h1>マニュアル置き場</h1>
-    <div class="container">
-        <form class="upload-form" id="uploadForm" enctype="multipart/form-data">
-            <input type="file" id="fileInput" name="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt">
-            <button type="button" onclick="uploadFile()">アップロード</button>
-        </form>
-        <div class="file-list" id="fileList">
-            <h2>アップロード済みのファイル</h2>
-            <!-- アップロード済みファイルをリストとして表示 -->
-        </div>
+    <div class="breadcrumbs">
+        <a href="index.html">トップページ</a> &gt; クラウドマニュアル置き場
     </div>
-    <script>
-        async function uploadFile() {
-            const fileInput = document.getElementById('fileInput');
-            const file = fileInput.files[0];
-            if (!file) {
-                alert('ファイルを選択してください');
-                return;
+</header>
+<div class="container">
+    <form class="upload-form" id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt">
+        <button type="button" onclick="uploadFile()">アップロード</button>
+    </form>
+    <div class="file-list" id="fileList">
+        <h2>アップロード済みのファイル</h2>
+        <!-- アップロード済みファイルをリストとして表示 -->
+    </div>
+</div>
+<script>
+    async function uploadFile() {
+        const fileInput = document.getElementById('fileInput');
+        const file = fileInput.files[0];
+        if (!file) {
+            alert('ファイルを選択してください');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+            if (response.ok) {
+                alert('アップロードが完了しました');
+                fetchUploadedFiles();
+            } else {
+                alert('アップロードに失敗しました');
             }
+        } catch (error) {
+            alert('エラーが発生しました');
+        }
+    }
 
-            const formData = new FormData();
-            formData.append('file', file);
-
-            try {
-                const response = await fetch('/upload', {
-                    method: 'POST',
-                    body: formData
+    async function fetchUploadedFiles() {
+        try {
+            const response = await fetch('/files');
+            if (response.ok) {
+                const files = await response.json();
+                const fileList = document.getElementById('fileList');
+                fileList.innerHTML = '<h2>アップロード済みのファイル</h2>';
+                files.forEach(file => {
+                    const fileItem = document.createElement('div');
+                    fileItem.className = 'file-item';
+                    fileItem.innerHTML = `<a href="/uploads/${file}" target="_blank">${file}</a>`;
+                    fileList.appendChild(fileItem);
                 });
-                if (response.ok) {
-                    alert('アップロードが完了しました');
-                    fetchUploadedFiles();
-                } else {
-                    alert('アップロードに失敗しました');
-                }
-            } catch (error) {
-                alert('エラーが発生しました');
             }
+        } catch (error) {
+            console.error('ファイルリストの取得に失敗しました', error);
         }
+    }
 
-        async function fetchUploadedFiles() {
-            try {
-                const response = await fetch('/files');
-                if (response.ok) {
-                    const files = await response.json();
-                    const fileList = document.getElementById('fileList');
-                    fileList.innerHTML = '<h2>アップロード済みのファイル</h2>';
-                    files.forEach(file => {
-                        const fileItem = document.createElement('div');
-                        fileItem.className = 'file-item';
-                        fileItem.innerHTML = `<a href="/uploads/${file}" target="_blank">${file}</a>`;
-                        fileList.appendChild(fileItem);
-                    });
-                }
-            } catch (error) {
-                console.error('ファイルリストの取得に失敗しました', error);
-            }
-        }
-
-        // ページ読み込み時にアップロード済みファイルを取得
-        document.addEventListener('DOMContentLoaded', fetchUploadedFiles);
-    </script>
+    // ページ読み込み時にアップロード済みファイルを取得
+    document.addEventListener('DOMContentLoaded', fetchUploadedFiles);
+</script>
 </body>
 </html>
