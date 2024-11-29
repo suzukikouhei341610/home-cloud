@@ -124,8 +124,25 @@
             transition: background-color 0.3s;
         }
 
+        button.alter{
+            width: 20%;
+            padding: 12px; /* ボタンのパディングを調整 */
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
         button:hover {
             background-color: #a06c31;
+        }
+
+        button.alter:hover {
+            background-color: #454444;
         }
     </style>
 </head>
@@ -135,7 +152,7 @@
         <h1>DL AWS - DNSレコード申請</h1>
         <div class="breadcrumb">
             <a href="index.html">トップページ</a> ＞＞ 
-            <a href="home-cloud.html">各種申請</a> ＞＞ 
+            <a href="aws-cloud.html">各種申請</a> ＞＞ 
             DNSレコード申請
         </div>
     </header>
@@ -145,21 +162,53 @@
             <div class="form-content">
                 <fieldset>
                     <legend>申請者情報</legend>
-                    <label for="employeeId">社員番号:</label>
-                    <input type="text" id="employeeId" name="employeeId" required>
 
-                    <label for="name">氏名:</label>
-                    <input type="text" id="name" name="name" required>
+                    <label for="application_date">申請日:</label>
+                    <input type="date" id="application_date" name="application_date" required>
 
-                    <label for="department">所属:</label>
+                    <label for="preferredDate">作業希望日:</label>
+                    <input type="date" id="preferredDate" name="preferredDate" required>
+
+                    <label for="application_sum">申請回数:</label>
+                    <select id="application_sum" name="application_sum" required>
+                        <option value="one">初回</option>
+                        <option value="mora_than_two">２回目以降</option>
+                    </select>
+
+                    <label for="company">会社名:</label>
+                    <input type="text" id="company" name="company" required>
+
+                    <label for="department">所属名:</label>
                     <input type="text" id="department" name="department" required>
 
-                    <label for="extension">内線:</label>
-                    <input type="text" id="extension" name="extension" required>
+                    <label for="RP_name">申請責任者名:</label>
+                    <input type="text" id="RP_name" name="RP_name" required>
+
+                    <label for="RP_email_address">申請責任者連絡先(メールアドレス):</label>
+                    <input type="text" id="RP_email_address" name="RP_email_address" required>
+
+                    <label for="RIC_name">申請担当者名:</label>
+                    <input type="text" id="RIC_name" name="RIC_name" required>
+
+                    <label for="RIC_email_address">申請担当者連絡先(メールアドレス):</label>
+                    <input type="text" id="RIC_email_address" name="RIC_email_address" required>
+
+                    <label for="phone_number">申請担当者電話番号</label>
+                    <input type="text" id="phone_number" name="phone_number" required>
+
                 </fieldset>
                 
                 <fieldset>
-                    <legend>申請内容</legend>
+                    <legend>システム情報</legend>
+
+                    <label for="system_name">システム名:</label>
+                    <input type="text" id="system_name" name="system_name" required>
+
+                    <label for="system_summary">システム概要:</label>
+                    <input type="text" id="system_summary" name="system_summary" required>
+
+                    <label for="system_code">システムコード:</label>
+                    <input type="text" id="system_summary" name="system_code" required>
 
                     <label for="environment">環境:</label>
                     <select id="environment" name="environment" required>
@@ -167,11 +216,72 @@
                         <option value="本番">本番</option>
                     </select>
 
-                    <label for="preferredDate">作業希望日:</label>
-                    <input type="date" id="preferredDate" name="preferredDate" required>
+                    <label for="environment">個人情報データの取り扱い:</label>
+                    <select id="environment" name="environment" required>
+                        <option value="ST">あり</option>
+                        <option value="本番">なし</option>
+                    </select>
 
-                    <label for="reason">申請理由:</label>
-                    <textarea id="reason" name="reason" rows="3" required></textarea>
+                    <label for="environment">機微情報データの取り扱い:</label>
+                    <select id="environment" name="environment" required>
+                        <option value="ST">あり</option>
+                        <option value="本番">なし</option>
+                    </select>
+
+                </fieldset>
+
+                <fieldset>
+                    <legend>詳細情報</legend>
+                    <div id="external-sites-container">
+                        <div class="input-container">
+                            <label for="order">依頼内容:</label>
+                            <select id="order" name="order" required>
+                                <option value="新規作成">新規作成</option>
+                                <option value="追加">追加</option>
+                                <option value="変更">変更</option>
+                                <option value="削除">削除</option>
+                            </select>
+
+                            <label for="order">ドメイン種別:</label>
+                            <select id="domain_type" name="domain_type" required>
+                                <option value="内部非本番">内部向けDNSドメイン(非本番)</option>
+                                <option value="内部本番">内部向けDNSドメイン(本番)</option>
+                                <option value="外部非本番">外部向けDNSドメイン(非本番)</option>
+                                <option value="外部本番">外部向けDNSドメイン(本番)</option>
+                            </select>
+
+                            <label for="fqdn">FQDN:</label>
+                            <input type="text" id="fqdn" name="fqdn" required>
+
+                            <label for="order">レコードタイプ:</label>
+                            <select id="domain_type" name="domain_type" required>
+                                <option value="内部非本番">内部向けDNSドメイン(非本番)</option>
+                                <option value="内部本番">内部向けDNSドメイン(本番)</option>
+                                <option value="外部非本番">外部向けDNSドメイン(非本番)</option>
+                                <option value="外部本番">外部向けDNSドメイン(本番)</option>
+                            </select>
+
+                            <label for="arias">エイリアス:</label>
+                            <select id="arias" name="arias" required>
+                                <option value="use">使用</option>
+                                <option value="unuse">不使用</option>
+                            </select>
+
+                            <label for="endpoint">トラフィックのルーティング先(エンドポイント)※エイリアス使用時のみ記入:</label>
+                            <input type="text" id="endpoint" name="endpoint" required>
+
+                            <label for="region">トラフィックのルーティング先(リージョン)※エイリアス使用時のみ記入:</label>
+                            <input type="text" id="region" name="region" required>
+
+                            <label for="paramater">値:</label>
+                            <input type="text" id="paramater" name="paramater" required>
+
+                            <label for="ttl">TTL(秒):</label>
+                            <input type="text" id="ttl" name="ttl" required>
+
+                        </div>
+                    </div>
+                    <button class="alter" type="button" onclick="addSiteInput()">追加</button>
                 </fieldset>
             </div>
             
@@ -180,6 +290,21 @@
             </div>
         </form>
     </div>
+
+    <script>
+        function addSiteInput() {
+            const container = document.getElementById("external-sites-container");
+            const newInputDiv = document.createElement("div");
+            newInputDiv.classList.add("input-container");
+            
+            const newInput = document.createElement("input");
+            newInput.type = "text";
+            newInput.name = "append";
+            
+            newInputDiv.appendChild(newInput);
+            container.appendChild(newInputDiv);
+        }
+    </script>
 
 </body>
 </html>
