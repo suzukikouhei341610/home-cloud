@@ -124,8 +124,25 @@
             transition: background-color 0.3s;
         }
 
+        button.alter{
+            width: 20%;
+            padding: 12px; /* ボタンのパディングを調整 */
+            background-color: #000000;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
         button:hover {
             background-color: #a06c31;
+        }
+
+        button.alter:hover {
+            background-color: #454444;
         }
     </style>
 </head>
@@ -147,7 +164,7 @@
                     <legend>申請者情報</legend>
 
                     <label for="application_date">申請日:</label>
-                    <input type="text" id="application_date" name="application_date" required>
+                    <input type="date" id="application_date" name="application_date" required>
 
                     <label for="preferredDate">作業希望日:</label>
                     <input type="date" id="preferredDate" name="preferredDate" required>
@@ -211,8 +228,13 @@
                         <option value="本番">なし</option>
                     </select>
 
-                    <label for="reason">外部サイト名(ワイルドカード利用可能):</label>
-                    <textarea id="reason" name="reason" rows="3" required></textarea>
+                    <label for="append">外部サイト名(ワイルドカード利用可能):</label>
+                    <div id="external-sites-container">
+                        <div class="input-container">
+                            <input type="text" id="append" name="append" >
+                        </div>
+                    </div>
+                    <button class="alter" type="button" onclick="addSiteInput()">追加</button>
                 </fieldset>
             </div>
             
@@ -221,6 +243,21 @@
             </div>
         </form>
     </div>
+
+    <script>
+        function addSiteInput() {
+            const container = document.getElementById("external-sites-container");
+            const newInputDiv = document.createElement("div");
+            newInputDiv.classList.add("input-container");
+            
+            const newInput = document.createElement("input");
+            newInput.type = "text";
+            newInput.name = "append";
+            
+            newInputDiv.appendChild(newInput);
+            container.appendChild(newInputDiv);
+        }
+    </script>
 
 </body>
 </html>
