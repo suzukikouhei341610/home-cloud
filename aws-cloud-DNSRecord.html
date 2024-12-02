@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>外部サイト接続申請</title>
+    <title>DNS登録申請</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -149,11 +149,11 @@
 <body>
 
     <header>
-        <h1>DL AWS - 外部サイト接続申請</h1>
+        <h1>DL AWS - DNS登録申請</h1>
         <div class="breadcrumb">
             <a href="index.html">トップページ</a> ＞＞ 
             <a href="aws-cloud.html">各種申請</a> ＞＞ 
-            外部サイト接続申請
+            DNSレコード申請
         </div>
     </header>
 
@@ -228,10 +228,57 @@
                         <option value="本番">なし</option>
                     </select>
 
-                    <label for="append">外部サイト名(ワイルドカード利用可能):</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>詳細情報</legend>
                     <div id="external-sites-container">
                         <div class="input-container">
-                            <input type="text" id="append" name="append" >
+                            <label for="order">依頼内容:</label>
+                            <select id="order" name="order" required>
+                                <option value="新規作成">新規作成</option>
+                                <option value="追加">追加</option>
+                                <option value="変更">変更</option>
+                                <option value="削除">削除</option>
+                            </select>
+
+                            <label for="order">ドメイン種別:</label>
+                            <select id="domain_type" name="domain_type" required>
+                                <option value="内部非本番">内部向けDNSドメイン(非本番)</option>
+                                <option value="内部本番">内部向けDNSドメイン(本番)</option>
+                                <option value="外部非本番">外部向けDNSドメイン(非本番)</option>
+                                <option value="外部本番">外部向けDNSドメイン(本番)</option>
+                            </select>
+
+                            <label for="fqdn">FQDN:</label>
+                            <input type="text" id="fqdn" name="fqdn" required>
+
+                            <label for="order">レコードタイプ:</label>
+                            <select id="domain_type" name="domain_type" required>
+                                <option value="内部非本番">内部向けDNSドメイン(非本番)</option>
+                                <option value="内部本番">内部向けDNSドメイン(本番)</option>
+                                <option value="外部非本番">外部向けDNSドメイン(非本番)</option>
+                                <option value="外部本番">外部向けDNSドメイン(本番)</option>
+                            </select>
+
+                            <label for="arias">エイリアス:</label>
+                            <select id="arias" name="arias" required>
+                                <option value="use">使用</option>
+                                <option value="unuse">不使用</option>
+                            </select>
+
+                            <label for="endpoint">トラフィックのルーティング先(エンドポイント)※エイリアス使用時のみ記入:</label>
+                            <input type="text" id="endpoint" name="endpoint" required>
+
+                            <label for="region">トラフィックのルーティング先(リージョン)※エイリアス使用時のみ記入:</label>
+                            <input type="text" id="region" name="region" required>
+
+                            <label for="paramater">値:</label>
+                            <input type="text" id="paramater" name="paramater" required>
+
+                            <label for="ttl">TTL(秒):</label>
+                            <input type="text" id="ttl" name="ttl" required>
+
                         </div>
                     </div>
                     <button class="alter" type="button" onclick="addSiteInput()">追加</button>
