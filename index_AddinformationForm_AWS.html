@@ -12,7 +12,7 @@
             padding: 0;
         }
         header {
-            background: linear-gradient(to right, #140079 70%, #aadbff);
+            background: linear-gradient(to right, #140079 70%, #d2d6e8);
             color: white;
             padding: 15px;
             text-align: center;
@@ -71,7 +71,7 @@
             background-color: #2980b9;
         }
         .btn-cancel {
-            background-color: #e74c3c;
+            background-color: #d9081e;
             color: white;
             padding: 10px 20px;
             font-size: 16px;
@@ -82,15 +82,28 @@
             width: 100%;
         }
         .btn-cancel:hover {
-            background-color: #c0392b;
+            background-color: #d9081e;
         }
+    .breadcrumb {
+        text-align: left; /* 左寄せ */
+        margin: 0; /* 不要な余白を削除 */
+        padding: 10px 0 0 10px; /* 上部に少し余白を追加 */
+        font-size: 14px; /* フォントサイズを調整 */
+    }
+    .breadcrumb a {
+        color: #fff; /* リンクの文字色を白に設定 */
+        text-decoration: none; /* 下線を削除 */
+    }
+    .breadcrumb a:hover {
+        text-decoration: underline; /* ホバー時に下線を表示 */
+    }
     </style>
 </head>
 <body>
 <header>
     <h1>DL-AWSお知らせ管理</h1>
     <div class="breadcrumb">
-        <a href="index.html">トップページ</a> >> <a>DL-AWSお知らせ追加</a>
+        <a href="index.html">トップページ</a>>><a>DL-AWSお知らせ追加</a>
     </div>
 </header>
 <div class="form-container">
