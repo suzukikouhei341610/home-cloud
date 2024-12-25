@@ -15,7 +15,7 @@
     header {
       background: linear-gradient(to right, #140079 70%, #d2d6e8);
       color: white;
-      padding: 15px;
+      padding: 5px;
       text-align: center;
     }
 
@@ -70,11 +70,35 @@
       padding: 10px;
       margin-top: 20px;
     }
+
+    .breadcrumb {
+        text-align: left; /* 左寄せ */
+        margin: 0; /* 不要な余白を削除 */
+        padding: 10px 0 0 10px; /* 上部に少し余白を追加 */
+        font-size: 14px; /* フォントサイズを調整 */
+    }
+    .breadcrumb a {
+        color: #fff; /* リンクの文字色を白に設定 */
+        text-decoration: none; /* 下線を削除 */
+    }
+    .breadcrumb a:hover {
+        text-decoration: underline; /* ホバー時に下線を表示 */
+    }
+    header h1 {
+  margin: 0; /* 上下の余白を0に */
+  font-size: 24px; /* フォントサイズも小さく調整 */
+}
+
   </style>
 </head>
 <body>
   <header>
     <h1>お知らせ編集</h1>
+    <div class="breadcrumb">
+      <a href="index.html">トップページ</a> >> 
+      <a href="index_NoticeManagement_AWS.html">お知らせ管理(DL-AWS)</a>>>
+      お知らせ編集
+  </div>
   </header>
 
   <main>

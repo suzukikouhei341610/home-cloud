@@ -96,20 +96,28 @@
         }
 
         .checkbox-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-        .checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+.checkbox-item {
+    display: flex;
+    align-items: center; /* 縦方向で中央揃え */
+    gap: 10px;
+}
 
-        .checkbox-item input {
-            margin-right: 10px;
-        }
+.checkbox-item input[type="checkbox"] {
+    width: 16px; /* チェックボックスのサイズを標準化 */
+    height: 16px;
+    margin: 0; /* マージンをリセット */
+}
+
+.checkbox-item label {
+    margin: 0; /* ラベルの余白をリセット */
+    line-height: 16px; /* チェックボックスと同じ高さに揃える */
+}
+
 
         button {
             width: 30%;
@@ -151,8 +159,7 @@
     <header>
         <h1>ジョブ実行エージェント申請</h1>
         <div class="breadcrumb">
-            <a href="index.html">トップページ</a> >>
-            <a href="home-cloud.html">各種申請</a> >> 
+            <a href="index.html">トップページ</a> >> 
             ジョブ実行エージェント申請
         </div>
     </header>
@@ -254,5 +261,62 @@
             </fieldset>
         </div>
     </div>
+    <script>
+        function validateForm() {
+            // 必須項目のチェック
+            const employeeNumber = document.getElementById('employeeNumber').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const department = document.getElementById('department').value.trim();
+            const extension = document.getElementById('extension').value.trim();
+            const environment = document.querySelector('input[name="environment"]:checked');
+            const reason = document.getElementById('reason').value.trim();
+            const desiredDate = document.getElementById('desiredDate').value.trim();
+            const checkboxes = document.querySelectorAll('.checkbox-item input[type="checkbox"]');
+            const remarks = document.getElementById('remarks').value.trim();
+            
+            const changeType1 = document.querySelector('input[name="changeType1"]').value.trim();
+            const serverName1 = document.querySelector('input[name="serverName1"]').value.trim();
+            const executionLevel1 = document.querySelector('input[name="executionLevel1"]').value.trim();
+    
+            // 数字のみチェック用正規表現
+            const numberPattern = /^[0-9]+$/;
+    
+            // 社員番号と内線が数字のみかを確認
+            if (!numberPattern.test(employeeNumber)) {
+                alert('社員番号は数字のみで入力してください。');
+                return false;
+            }
+            if (!numberPattern.test(extension)) {
+                alert('内線は数字のみで入力してください。');
+                return false;
+            }
+    
+            // 必須項目のチェック
+            if (
+                !employeeNumber || !name || !department || !extension || !environment || 
+                !reason || !desiredDate || !changeType1 || !serverName1 || !executionLevel1
+            ) {
+                alert('すべての入力項目を入力してください。');
+                return false;
+            }
+    
+            // チェックボックスの確認
+            let allChecked = true;
+            checkboxes.forEach(box => {
+                if (!box.checked) {
+                    allChecked = false;
+                }
+            });
+    
+            if (!allChecked) {
+                alert('すべてのチェック項目を確認してください。');
+                return false;
+            }
+    
+            // 入力がすべて正しい場合はフォーム送信を許可
+            return true;
+        }
+    </script>
+    
 </body>
 </html>

@@ -177,6 +177,58 @@
             </div>
         </form>
     </div>
+    <script>
+        document.querySelector('form').addEventListener('submit', function (event) {
+            // 入力項目の取得
+            const employeeId = document.getElementById('employeeId');
+            const name = document.getElementById('name');
+            const department = document.getElementById('department');
+            const extension = document.getElementById('extension');
+            const targetId = document.getElementById('targetId');
+            const environment = document.getElementById('environment');
+            const preferredDate = document.getElementById('preferredDate');
+            const reason = document.getElementById('reason');
+    
+            // 数字のみをチェックする正規表現
+            const numberPattern = /^[0-9]+$/;
+    
+            // エラーメッセージを格納する配列
+            let errors = [];
+    
+            // 入力チェック
+            if (!employeeId.value || !numberPattern.test(employeeId.value)) {
+                errors.push('社員番号は数字のみで入力してください。');
+            }
+            if (!name.value) {
+                errors.push('氏名を入力してください。');
+            }
+            if (!department.value) {
+                errors.push('所属を入力してください。');
+            }
+            if (!extension.value || !numberPattern.test(extension.value)) {
+                errors.push('内線は数字のみで入力してください。');
+            }
+            if (!targetId.value) {
+                errors.push('対象IDを入力してください。');
+            }
+            if (!environment.value) {
+                errors.push('環境を選択してください。');
+            }
+            if (!preferredDate.value) {
+                errors.push('作業希望日を入力してください。');
+            }
+            if (!reason.value) {
+                errors.push('申請理由を入力してください。');
+            }
+    
+            // エラーがある場合は送信を停止し、アラートで表示
+            if (errors.length > 0) {
+                event.preventDefault();
+                alert(errors.join('\n'));
+            }
+        });
+    </script>
+    
 
 </body>
 </html>
