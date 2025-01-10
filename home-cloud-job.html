@@ -115,7 +115,8 @@
         .form-content {
         display: flex;
         gap: 20px;
-        justify-content: flex-end; /* 要素を右寄せに配置 */
+        justify-content: flex-end;
+        flex-direction: row; /* 要素を右寄せに配置 */
     }
 
     .form-container {
@@ -240,12 +241,20 @@ color: #5096c9;
 .submenu a:hover {
     text-decoration: underline;
 }
+.submenu.open {
+  display: block; /* サブメニューが開かれた場合 */
+}
+.arrow {
+    margin-left: 8px;
+    color: black
+}
     </style>
 </head>
 <body>
     <header>
         <h1>ジョブ実行エージェント申請</h1>
     </header>
+    
     <div class="container">
         <div class="sidebar-wrapper">
             <div class="sidebar-title">メニュー</div>

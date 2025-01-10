@@ -240,7 +240,13 @@ color: #5096c9;
 .submenu a:hover {
     text-decoration: underline;
 }
-
+.submenu.open {
+  display: block; /* サブメニューが開かれた場合 */
+}
+.arrow {
+    margin-left: 8px;
+    color: black
+}
         
     </style>
 </head>
@@ -411,7 +417,29 @@ color: #5096c9;
                 event.preventDefault();
                 alert(errors.join('\n'));
             }
+        })
+        document.addEventListener("DOMContentLoaded", function() {
+        const toggleMenus = document.querySelectorAll('.toggle-menu');
+
+        toggleMenus.forEach(function(menu) {
+            menu.addEventListener('click', function(event) {
+                event.preventDefault();
+                const submenu = this.nextElementSibling;
+                const arrow = this.querySelector('.arrow');
+                
+                if (submenu && submenu.classList.contains('submenu')) {
+                    submenu.classList.toggle('open');
+                    
+                    // 矢印を切り替え
+                    if (submenu.classList.contains('open')) {
+                        arrow.textContent = "▼";
+                    } else {
+                        arrow.textContent = "▶";
+                    }
+                }
+            });
         });
+    });
     </script>
     
 
